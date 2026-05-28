@@ -1,0 +1,107 @@
+\documentclass{notes}
+
+\hypersetup{
+  pdfauthor={Your Name},
+  pdftitle={Notes Template}
+}
+
+\title{信息论笔记与开卷资料模板}
+\author{姓名}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{使用说明}
+
+本模板适合整理课堂笔记、复习提纲和开卷考试资料。建议每节按照“定义 $\to$ 定理 $\to$ 公式 $\to$ 例题 $\to$ 易错点”的顺序整理。
+
+\begin{keypoint}
+开卷资料应优先记录可快速检索的信息：核心结论、适用条件、常见变形、典型题型和容易漏掉的限制条件。
+\end{keypoint}
+
+\begin{hintBox}
+需要更紧凑的排版时，可以把某些总结页放入 \verb|multicols| 环境，例如 \verb|\begin{multicols}{2} ... \end{multicols}|。
+\end{hintBox}
+
+\section{基础概念}
+
+\begin{definition}[熵]
+离散随机变量 $X$ 的熵定义为
+\[
+  H(X) = -\sum_{x \in \mathcal{X}} p(x) \log p(x).
+\]
+若没有特别说明，信息论中常取 $\log = \log_2$，单位为 bit。
+\end{definition}
+
+\begin{formulaBox}
+常用关系式：
+\begin{align*}
+  H(X,Y) &= H(X) + H(Y \mid X), \\
+  I(X;Y) &= H(X) - H(X \mid Y), \\
+  I(X;Y) &= H(X) + H(Y) - H(X,Y), \\
+  \KL(P\|Q) &= \sum_x P(x) \log \frac{P(x)}{Q(x)}.
+\end{align*}
+\end{formulaBox}
+
+\begin{theorem}[互信息非负]
+对任意离散随机变量 $X,Y$，有
+\[
+  I(X;Y) \ge 0.
+\]
+等号成立当且仅当 $X$ 与 $Y$ 相互独立。
+\end{theorem}
+
+\begin{proof}
+由 Gibbs 不等式，
+\[
+  I(X;Y) = \KL(P_{XY}\|P_XP_Y) \ge 0.
+\]
+当且仅当 $P_{XY}=P_XP_Y$ 时取等号，即 $X$ 与 $Y$ 独立。
+\end{proof}
+
+\begin{warningBox}
+不要混淆 $H(X\mid Y)=0$ 与 $I(X;Y)=0$。前者表示 $Y$ 完全决定 $X$，后者表示 $X$ 与 $Y$ 没有统计相关性。
+\end{warningBox}
+
+\section{题型整理}
+
+\begin{methodBox}[title={计算熵和互信息的步骤}]
+\begin{enumerate}
+  \item 写出联合分布表或概率质量函数。
+  \item 求边缘分布 $P_X, P_Y$。
+  \item 选择最短路径：用 $I(X;Y)=H(X)-H(X\mid Y)$ 或 $I(X;Y)=H(X)+H(Y)-H(X,Y)$。
+  \item 检查单位和对数底数。
+\end{enumerate}
+\end{methodBox}
+
+\begin{example}
+若 $X\sim\mathrm{Bernoulli}(p)$，则
+\[
+  H(X)=h_2(p)=-p\log p-(1-p)\log(1-p).
+\]
+特别地，$p=1/2$ 时 $H(X)=1$ bit。
+\end{example}
+
+\section{开卷速查页示例}
+
+\begin{multicols}{2}
+\subsection*{核心公式}
+\begin{itemize}
+  \item 条件熵：$H(X\mid Y)=H(X,Y)-H(Y)$
+  \item 链式法则：$H(X_1^n)=\sum_{i=1}^n H(X_i\mid X_1^{i-1})$
+  \item 数据处理不等式：若 $X\to Y\to Z$，则 $I(X;Z)\le I(X;Y)$
+\end{itemize}
+
+\subsection*{常见判断}
+\begin{itemize}
+  \item 独立 $\Rightarrow I(X;Y)=0$
+  \item 函数关系 $X=f(Y) \Rightarrow H(X\mid Y)=0$
+  \item 条件会降低熵：$H(X\mid Y)\le H(X)$
+\end{itemize}
+\end{multicols}
+
+\end{document}
