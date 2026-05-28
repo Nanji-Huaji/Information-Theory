@@ -75,49 +75,49 @@
 \newtcolorbox{keypoint}[1][]{
   note base,
   title={要点},
-  colback=RoyalBlue!4,
-  colframe=RoyalBlue!70!black,
-  coltitle=white,
-  colbacktitle=RoyalBlue!70!black,
+  colback=RoyalBlue!3,
+  colframe=RoyalBlue!35!black,
+  coltitle=black,
+  colbacktitle=RoyalBlue!18,
   #1
 }
 
 \newtcolorbox{formulaBox}[1][]{
   note base,
   title={公式},
-  colback=SeaGreen!5,
-  colframe=SeaGreen!65!black,
-  coltitle=white,
-  colbacktitle=SeaGreen!65!black,
+  colback=SeaGreen!4,
+  colframe=SeaGreen!35!black,
+  coltitle=black,
+  colbacktitle=SeaGreen!18,
   #1
 }
 
 \newtcolorbox{hintBox}[1][]{
   note base,
   title={提示},
-  colback=Goldenrod!8,
-  colframe=Goldenrod!75!black,
+  colback=Goldenrod!10,
+  colframe=Goldenrod!40!black,
   coltitle=black,
-  colbacktitle=Goldenrod!45,
+  colbacktitle=Goldenrod!22,
   #1
 }
 
 \newtcolorbox{warningBox}[1][]{
   note base,
   title={易错点},
-  colback=Red!4,
-  colframe=Red!65!black,
-  coltitle=white,
-  colbacktitle=Red!65!black,
+  colback=Red!3,
+  colframe=Red!35!black,
+  coltitle=black,
+  colbacktitle=Red!18,
   #1
 }
 
 \newtcolorbox{methodBox}[1][]{
   note base,
   title={方法},
-  colback=Purple!4,
-  colframe=Purple!65!black,
-  coltitle=white,
-  colbacktitle=Purple!65!black,
+  colback=Purple!3,
+  colframe=Purple!35!black,
+  coltitle=black,
+  colbacktitle=Purple!18,
   #1
 }
