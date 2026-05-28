@@ -1,0 +1,213 @@
+\section{第一章 绪论}
+
+\subsection{信息的概念和主要特征}
+
+\subsubsection{概述}
+信息时代社会的发展离不开\textbf{物质}、\textbf{能量}和\textbf{信息资源}。信息论要回答的核心问题，不是抽象地讨论“信息是什么”，而是围绕信息的\textbf{度量}、\textbf{传输}和\textbf{处理}建立可分析的工程模型。
+
+\begin{keypoint}{信息概述}
+信息论在当前更多是一门\textbf{专业基础课}，因为“信息”的\textbf{抽象性}很强，而且关于信息的定义尚未完全统一。
+\end{keypoint}
+
+\begin{definitionBox}{广义信息}
+广义地说，信息是认识主体（人、生物、机器）所感受的和所表达的\textbf{事物运动的状态及其变化方式}。
+\end{definitionBox}
+
+\begin{definitionBox}{信息的三个基本层次}
+信息的三个基本层次：
+\begin{itemize}
+  \item \textbf{语法信息}：关注外在形式，不涉及含义与效用；
+  \item \textbf{语义信息}：关注状态和变化方式的含义；
+  \item \textbf{语用信息}：关注状态及其变化方式的效用。
+\end{itemize}
+\end{definitionBox}
+
+\begin{warningBox}{层次关系}
+研究\textbf{语义信息}要以\textbf{语法信息}为基础，研究\textbf{语用信息}要以语义信息和语法信息为基础。
+\end{warningBox}
+
+\begin{keypoint}{香农信息论对象}
+香农信息论研究的是语法信息中的\textbf{概率信息}，先忽略\textbf{语义}和\textbf{语用}因素，再解决通信工程中的\textbf{传递}与\textbf{编码}问题。
+\end{keypoint}
+
+\begin{definitionBox}{通信信息的三个层次}
+通信信息可分为三个层次：\textbf{信号}、\textbf{消息}、\textbf{信息}。
+其中，消息是信息的携带者，信息包含于消息之中；信号是消息的载体，消息是信号的具体内容。
+\end{definitionBox}
+
+\subsection{通信系统的模型}
+
+\subsubsection{通信系统与性能指标}
+通信系统是从一个地方向另一个地方\textbf{传送信息}的系统；在某种意义上，存储系统也可看作从现在向将来发送信息的系统。
+
+\begin{methodBox}{通信系统三项性能指标}
+\begin{enumerate}
+  \item \textbf{有效性}：传得快，码尽量短，频谱利用率尽量高；
+  \item \textbf{可靠性}：传得好，误码率尽量低；
+  \item \textbf{安全性}：传得安全，信息不泄露给未授权者。
+\end{enumerate}
+\end{methodBox}
+
+\begin{formulaBox}{提升指标的措施}
+提高三项指标的常用措施：
+\begin{itemize}
+  \item 有效性：采用信源编码压缩码率，采用高频谱利用率调制；
+  \item 可靠性：采用信道编码降低错误率；
+  \item 安全性：采用强度高的加密和伪装技术。
+\end{itemize}
+\end{formulaBox}
+
+\subsubsection{通信系统模型}
+典型的数字通信系统由\textbf{信源}、\textbf{编码器}、\textbf{信道}、\textbf{译码器}和\textbf{信宿}组成，中间会受到\textbf{噪声}干扰。
+
+\begin{formulaBox}{通信系统模型}
+\[
+\text{信源} \to \text{编码器} \to \text{信道} \to \text{译码器} \to \text{信宿}
+\]
+编码器通常包括：信源编码器、信道编码器和调制器；译码器通常包括：解调器、信道译码器和信源译码器。
+\end{formulaBox}
+
+\begin{definitionBox}{信源}
+信源直接产生消息或消息序列。按输出符号取值，可分为\textbf{离散信源}和\textbf{连续信源}；按输出符号之间的依赖关系，可分为\textbf{无记忆信源}和\textbf{有记忆信源}。
+\end{definitionBox}
+
+\begin{definitionBox}{信道}
+信道是信源与信宿之间的连接关系。按研究对象可分为\textbf{狭义信道}和\textbf{广义信道}；按噪声情况可分为\textbf{无噪声信道}和\textbf{有噪声信道}。
+\end{definitionBox}
+
+\begin{keypoint}{AWGN信道}
+信息论中研究最多的是理想加性高斯白噪声（\textbf{AWGN}）信道，因为\textbf{高斯噪声}普遍存在，而且通常最难处理。
+\end{keypoint}
+
+\subsection{香农信息论概述}
+
+\subsubsection{主要问题}
+香农信息论主要研究四类问题：
+
+\begin{enumerate}
+  \item 信源以及信息的含义和度量；
+  \item 无失真信源编码定理，即\textbf{香农第一定理}；
+  \item 信道容量与信息的可靠传输，即\textbf{香农第二定理}；
+  \item 信息率失真理论，即数据压缩的理论基础。
+\end{enumerate}
+
+\begin{theoremBox}{香农第一定理}
+\textbf{香农第一定理}：如果编码后的信源序列信息传输速率不小于\textbf{信源熵}，则可实现无失真编码；反之，不存在无失真编码。
+\end{theoremBox}
+
+\begin{theoremBox}{香农第二定理}
+\textbf{香农第二定理}：如果信息传输速率小于\textbf{信道容量}，则当编码序列足够长时，总可找到一种编码使传输差错任意小；反之，不存在使差错任意小的编码。
+\end{theoremBox}
+
+\begin{theoremBox}{香农第三定理}
+\textbf{香农第三定理}：对任何失真测度 $D \ge 0$，只要码字足够长，总可找到一种编码，使得当信息传输率满足 $R(D)$ 时，平均失真不超过 $D$。$R(D)$ 称为\textbf{信息率失真函数}。
+\end{theoremBox}
+
+\subsubsection{信息论特点}
+\begin{keypoint}{信息论特点}
+信息论以\textbf{概率论}、\textbf{随机过程}为基本工具，关心最优系统的\textbf{性能边界}和达到该边界的条件，而不是直接替代工程设计。
+\end{keypoint}
+
+\begin{itemize}
+  \item 研究对象是语法信息中的\textbf{概率信息}，要求信源是随机过程；
+  \item 研究的是通信系统整个过程，而不是单个环节；
+  \item 重点放在编、译码器，但对单个环节同样有帮助。
+\end{itemize}
+
+\subsection{信息论的产生与发展}
+
+\subsubsection{理论与技术背景}
+1948年以前，\textbf{Nyquist}、\textbf{Hartley}、\textbf{Wiener}、\textbf{Rice} 等人的工作已为信息论奠定基础。另一方面，\textbf{电报}、\textbf{电话}、\textbf{无线电报}、\textbf{电视}、\textbf{调频}、\textbf{脉冲调制}等技术的发展，也推动了信息论的诞生。
+
+\begin{warningBox}{理论背景}
+香农并不是在真空中提出信息论的；它是\textbf{理论背景}与\textbf{技术背景}共同成熟后的结果。
+\end{warningBox}
+
+\subsubsection{香农的主要工作}
+\begin{methodBox}{里程碑}
+\begin{itemize}
+  \item 1948 年：《通信的数学理论》，奠定信息论理论基础；
+  \item 1956 年：《噪声信道的零差错容量》，开创\textbf{零差错容量}研究；
+  \item 1959 年：《在保真度准则下的离散信源编码定理》，推动\textbf{率失真理论}；
+  \item 1961 年：《双路通信信道》，开拓\textbf{多用户理论}研究。
+\end{itemize}
+\end{methodBox}
+
+\subsubsection{后续发展}
+\begin{multicols}{2}
+\subsection*{无损数据压缩}
+\begin{itemize}
+  \item Huffman 编码
+  \item Lempel-Ziv 方法
+  \item 文本树加权编码
+  \item 相关信源编码
+\end{itemize}
+
+\subsection*{可靠传输}
+\begin{itemize}
+  \item 离散无记忆信道容量迭代算法
+  \item 高斯信道研究
+  \item 有约束序列编码
+  \item 零差错信道容量
+  \item 多用户信息论
+\end{itemize}
+
+\subsection*{有损数据压缩}
+\begin{itemize}
+  \item 率失真函数
+  \item 编码定理
+  \item 通用有损数据压缩
+  \item 多端数据压缩
+\end{itemize}
+\end{multicols}
+
+\subsection{香农简介与学术风格}
+
+\subsubsection{生平与风格}
+香农生于 1916 年，早年对\textbf{数学}和\textbf{科学}兴趣浓厚。其硕士论文《继电器和开关电路的符号分析》是\textbf{数字信号处理}的重要里程碑之一。
+
+\begin{keypoint}{学术风格}
+香农的学术风格可以概括为：先尽可能\textbf{简化}复杂工程系统，抽象出\textbf{本质模型}；再用\textbf{数学工具}分析\textbf{性能边界}；最后把结论反馈给工程实践，形成持续改进的闭环。
+\end{keypoint}
+
+\begin{warningBox}{思维方式}
+信息论思维不是替代工程实践，而是帮助我们从\textbf{“know-how”}走向\textbf{“know-why”}。
+\end{warningBox}
+
+\subsection{公式速查表}
+
+{\scriptsize
+\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{类别} & \textbf{公式 / 核心结论} \\
+\midrule
+通信系统模型 & $\text{信源} \to \text{编码器} \to \text{信道} \to \text{译码器} \to \text{信宿}$ \\
+\midrule
+性能指标   & 有效性（码率）、可靠性（误码率）、安全性（加密） \\
+\midrule
+香农第一定理 & 信息传输速率 $\ge$ 信源熵 $\Rightarrow$ 可实现无失真编码 \\
+\midrule
+香农第二定理 & 信息传输速率 $<$ 信道容量 $\Rightarrow$ 可使差错任意小 \\
+\midrule
+香农第三定理 & 信息传输率 $\ge R(D)$ 时，平均失真 $\le D$；$R(D)$ 为率失真函数 \\
+\midrule
+信息三个层次 & 语法信息（形式）$\to$ 语义信息（含义）$\to$ 语用信息（效用） \\
+\midrule
+信源分类   & 离散 / 连续；无记忆 / 有记忆 \\
+\midrule
+信道分类   & 狭义 / 广义；无噪声 / 有噪声；AWGN 为最常见模型 \\
+\bottomrule
+\end{tabularx}
+}
+
+\subsection{本章要求}
+\begin{remarkBox}{本章学习重点}
+本章学习重点：
+\begin{itemize}
+  \item \textbf{熵}与\textbf{互信息}的概念、性质与计算；
+  \item \textbf{离散信源}和\textbf{马尔可夫信源}熵的计算；
+  \item \textbf{离散信源编码定理}与 \textbf{Huffman 编码}；
+  \item \textbf{离散信道}差错概率与\textbf{编译码准则}；
+  \item \textbf{特殊离散信道}与\textbf{高斯信道容量}计算。
+\end{itemize}
+\end{remarkBox}

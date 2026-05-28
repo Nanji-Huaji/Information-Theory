@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{notes}[2026/05/28 Notes and handout template class]
 
-\LoadClass[11pt,a4paper]{ctexart}
+\LoadClass[11pt,a4paper,fontset=fandol]{ctexart}
 
 \RequirePackage[margin=2.2cm]{geometry}
 \RequirePackage{setspace}
@@ -72,9 +72,33 @@
   }
 }
 
-\newtcolorbox{keypoint}[1][]{
+\newcounter{keypointCounter}[section]
+\renewcommand{\thekeypointCounter}{\arabic{keypointCounter}}
+
+\newcounter{formulaBoxCounter}[section]
+\renewcommand{\theformulaBoxCounter}{\arabic{formulaBoxCounter}}
+
+\newcounter{definitionBoxCounter}[section]
+\renewcommand{\thedefinitionBoxCounter}{\arabic{definitionBoxCounter}}
+
+\newcounter{theoremBoxCounter}[section]
+\renewcommand{\thetheoremBoxCounter}{\arabic{theoremBoxCounter}}
+
+\newcounter{remarkBoxCounter}[section]
+\renewcommand{\theremarkBoxCounter}{\arabic{remarkBoxCounter}}
+
+\newcounter{hintBoxCounter}[section]
+\renewcommand{\thehintBoxCounter}{\arabic{hintBoxCounter}}
+
+\newcounter{warningBoxCounter}[section]
+\renewcommand{\thewarningBoxCounter}{\arabic{warningBoxCounter}}
+
+\newcounter{methodBoxCounter}[section]
+\renewcommand{\themethodBoxCounter}{\arabic{methodBoxCounter}}
+
+\newtcolorbox{keypoint}[2][]{
   note base,
-  title={要点},
+  title={\stepcounter{keypointCounter}要点~\thekeypointCounter（#2）},
   colback=RoyalBlue!3,
   colframe=RoyalBlue!35!black,
   coltitle=black,
@@ -82,9 +106,9 @@
   #1
 }
 
-\newtcolorbox{formulaBox}[1][]{
+\newtcolorbox{formulaBox}[2][]{
   note base,
-  title={公式},
+  title={\stepcounter{formulaBoxCounter}公式~\theformulaBoxCounter（#2）},
   colback=SeaGreen!4,
   colframe=SeaGreen!35!black,
   coltitle=black,
@@ -92,9 +116,39 @@
   #1
 }
 
-\newtcolorbox{hintBox}[1][]{
+\newtcolorbox{definitionBox}[2][]{
   note base,
-  title={提示},
+  title={\stepcounter{definitionBoxCounter}定义~\thedefinitionBoxCounter（#2）},
+  colback=TealBlue!4,
+  colframe=TealBlue!45!black,
+  coltitle=black,
+  colbacktitle=TealBlue!18,
+  #1
+}
+
+\newtcolorbox{theoremBox}[2][]{
+  note base,
+  title={\stepcounter{theoremBoxCounter}定理~\thetheoremBoxCounter（#2）},
+  colback=Orange!5,
+  colframe=Orange!45!black,
+  coltitle=black,
+  colbacktitle=Orange!20,
+  #1
+}
+
+\newtcolorbox{remarkBox}[2][]{
+  note base,
+  title={\stepcounter{remarkBoxCounter}说明~\theremarkBoxCounter（#2）},
+  colback=Gray!6,
+  colframe=Gray!45!black,
+  coltitle=black,
+  colbacktitle=Gray!20,
+  #1
+}
+
+\newtcolorbox{hintBox}[2][]{
+  note base,
+  title={\stepcounter{hintBoxCounter}提示~\thehintBoxCounter（#2）},
   colback=Goldenrod!10,
   colframe=Goldenrod!40!black,
   coltitle=black,
@@ -102,9 +156,9 @@
   #1
 }
 
-\newtcolorbox{warningBox}[1][]{
+\newtcolorbox{warningBox}[2][]{
   note base,
-  title={易错点},
+  title={\stepcounter{warningBoxCounter}易错点~\thewarningBoxCounter（#2）},
   colback=Red!3,
   colframe=Red!35!black,
   coltitle=black,
@@ -112,9 +166,9 @@
   #1
 }
 
-\newtcolorbox{methodBox}[1][]{
+\newtcolorbox{methodBox}[2][]{
   note base,
-  title={方法},
+  title={\stepcounter{methodBoxCounter}方法~\themethodBoxCounter（#2）},
   colback=Purple!3,
   colframe=Purple!35!black,
   coltitle=black,
