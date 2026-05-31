@@ -1,4 +1,163 @@
-\section{数学概念附录}
+\section{公式总表与数学概念附录}
+
+\subsection{信息论公式总表}
+
+本表把正文和作业中最常用的公式集中放在一起，便于开卷考试时快速定位。使用时先判断题目类型，再回到对应章节查看适用条件和推导细节。
+
+{\scriptsize
+\renewcommand{\arraystretch}{1.25}
+\setlength{\LTleft}{0pt}
+\setlength{\LTright}{0pt}
+\begin{longtable}{@{}p{0.24\textwidth}p{0.72\textwidth}@{}}
+\toprule
+\textbf{主题} & \textbf{核心公式 / 使用条件} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{主题} & \textbf{核心公式 / 使用条件} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{2}{r}{\footnotesize 续下页}\\
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+自信息 & $I(x)=-\log_2p(x)$，条件自信息用后验概率 $p(x\mid y)$ \\
+\midrule
+联合自信息 & $I(x,y)=-\log_2p(x,y)$，且 $I(x,y)=I(x)+I(y\mid x)$ \\
+\midrule
+点互信息 & $I(x;y)=\log_2\dfrac{p(x\mid y)}{p(x)}=\log_2\dfrac{p(x,y)}{p(x)p(y)}$ \\
+\midrule
+熵 & \textcolor{Red}{$H(X)=-\sum_xp(x)\log_2p(x)$}，$0\le H(X)\le\log_2|\mathcal X|$ \\
+\midrule
+条件熵 & $H(X\mid Y)=-\sum_{x,y}p(x,y)\log_2p(x\mid y)=H(X,Y)-H(Y)$ \\
+\midrule
+联合熵链式法则 & $H(X_1^N)=\sum_{i=1}^NH(X_i\mid X_1^{i-1})$；马氏链中常化为 $H(X_1)+\sum_{i=2}^NH(X_i\mid X_{i-1})$ \\
+\midrule
+互信息 & \textcolor{Red}{$I(X;Y)=H(X)+H(Y)-H(X,Y)=H(X)-H(X\mid Y)$}，且 $I(X;Y)\ge0$ \\
+\midrule
+条件互信息 & $I(X;Y\mid Z)=H(X\mid Z)-H(X\mid Y,Z)$ \\
+\midrule
+互信息链式法则 & $I(X_1^n;Y)=\sum_{i=1}^n I(X_i;Y\mid X_1^{i-1})$ \\
+\midrule
+相对熵 & \textcolor{Red}{$\KL(P\|Q)=\sum_xP(x)\log_2\frac{P(x)}{Q(x)}\ge0$} \\
+\midrule
+数据处理不等式 & 若 $X\to Y\to Z$，则 $I(X;Z)\le I(X;Y)$ 且 $I(X;Z)\le I(Y;Z)$ \\
+\midrule
+无记忆扩展源 & $H(X^N)=NH(X)$，典型序列数约为 $2^{NH(X)}$ \\
+\midrule
+平均符号熵 & $H_N(X)=\frac1NH(X^N)$，熵率 $H_\infty(X)=\lim_{N\to\infty}\frac1NH(X^N)$ \\
+\midrule
+平稳信源熵阶梯 & $H_0=\log_2|\mathcal X|$，且 $H_0\ge H_1\ge H_2\ge\cdots\ge H_\infty$ \\
+\midrule
+Kolmogorov-Chapman & $p_{ij}^{(m+n)}=\sum_kp_{ik}^{(m)}p_{kj}^{(n)}$，矩阵形式 $P^{(m+n)}=P^{(m)}P^{(n)}$ \\
+\midrule
+平稳马氏源熵率 & \textcolor{Red}{$H_\infty=\sum_i\pi_iH(P_{i\cdot})$}，其中 $\pi P=\pi$ 且 $\sum_i\pi_i=1$ \\
+\midrule
+零阶最大熵与剩余度 & $H_0=\log_2|\mathcal X|$，$\eta=H_\infty/H_0$，$\gamma=1-\eta$ \\
+\midrule
+微分熵 & $h(X)=-\int f(x)\log f(x)\,dx$；可为负，不能直接当作不确定性下界 \\
+\midrule
+高斯微分熵 & \textcolor{Red}{$h(X)=\frac12\log(2\pi e\sigma^2)$}；$n$ 维高斯 $h(X)=\frac12\log[(2\pi e)^n|K|]$ \\
+\midrule
+限峰值最大熵 & 若 $X\in[a,b]$，则 $h(X)\le\log(b-a)$，均匀分布达到等号 \\
+\midrule
+限功率最大熵 & 给定协方差约束时，高斯分布达到最大差熵 $h(X^N)\le\frac N2\log[2\pi e\det(\Sigma)^{1/N}]$ \\
+\midrule
+可逆线性变换 & $h(AX)=h(X)+\log|\det A|$，要求 $A$ 可逆 \\
+\midrule
+连续互信息 & $I(X;Y)=h(X)+h(Y)-h(X,Y)=h(Y)-h(Y\mid X)$ \\
+\midrule
+连续相对熵 & $D(p\|q)=\int p(x)\log\frac{p(x)}{q(x)}\,dx\ge0$ \\
+\midrule
+高斯互信息 & 二元联合高斯相关系数为 $\rho$ 时，$I(X;Y)=-\frac12\log(1-\rho^2)$ \\
+\midrule
+信号加噪声互信息 & 高斯加性噪声模型中常用 $I(X;Y)=\frac12\log\left(1+\frac PN\right)$ \\
+\midrule
+等长编码 & $l_{\min}=\lceil\log_rM\rceil$；错误概率为未被编码消息集合的总概率 \\
+\midrule
+定长码定理 & 当 $\frac lN\log r\ge H(X)+\delta$ 且 $N$ 足够大时，可使译码差错概率任意小 \\
+\midrule
+典型序列概率 & 对无记忆信源，典型序列概率约为 $2^{-NH(X)}$，典型集合规模约为 $2^{NH(X)}$ \\
+\midrule
+唯一可译码判别 & Kraft 不等式 $\sum_ir^{-l_i}\le1$；二元码取 $r=2$ \\
+\midrule
+Huffman 编码 & 平均码长 $\bar L=\sum_ip_il_i$，满足 $H_r(X)\le\bar L< H_r(X)+1$ \\
+\midrule
+扩展变长码界 & $N$ 次扩展变长码满足 $\frac{H(X)}{\log r}\le\bar l<\frac{H(X)}{\log r}+\frac1N$ \\
+\midrule
+编码速率与效率 & $R'=\bar l\log r$，$\eta=H(X)/(\bar l\log r)$，$\gamma=1-\eta$；码长方差 $\sigma_L^2=\sum_ip_i(l_i-\bar L)^2$ \\
+\midrule
+离散信道互信息 & $I(X;Y)=H(Y)-H(Y\mid X)$，其中 $p(y)=\sum_xp(x)p(y\mid x)$ \\
+\midrule
+离散无记忆信道 & $p(y^N\mid x^N)=\prod_{n=1}^Np(y_n\mid x_n)$；转移矩阵元素 $p_{ij}=p(y=b_j\mid x=a_i)$，每行和为 $1$ \\
+\midrule
+信道容量 & \textcolor{Red}{$C=\max_{p(x)}I(X;Y)$}；对称信道常由等概输入达到容量 \\
+\midrule
+矢量信道容量 & $C=\max_{p(x_1,\dots,x_N)}\frac1N I(X^N;Y^N)$ \\
+\midrule
+无损与确定信道容量 & 无损信道 $C=\log r$；确定信道 $C=\log s$，其中 $s$ 为可区分输出数 \\
+\midrule
+对称信道容量 & 强对称信道 $C=\log s-H(p_{11},\dots,p_{1s})$；$r$ 元对称信道 $C=\log r-H(p)-p\log(r-1)$ \\
+\midrule
+二元熵函数 & $h_2(p)=-p\log_2p-(1-p)\log_2(1-p)$ \\
+\midrule
+BSC 容量 & \textcolor{Red}{$C=1-h_2(\varepsilon)$}，两级 BSC 等效错误率 $\varepsilon_2=2\varepsilon(1-\varepsilon)$ \\
+\midrule
+删除型信道 & 二元删除概率为 $\delta$ 时 $C=1-\delta$ \\
+\midrule
+级联信道 & $P_{Z\mid X}=P_{Y\mid X}P_{Z\mid Y}$，容量不能一般地简单相乘 \\
+\midrule
+ML / MAP 译码 & $\hat x_{\mathrm{ML}}(y)=\arg\max_xp(y\mid x)$；\textcolor{Red}{$\hat x_{\mathrm{MAP}}(y)=\arg\max_xp(x)p(y\mid x)$} \\
+\midrule
+条件与平均错误率 & 条件错误率为 $\sum_{a_i\ne a^*}P_{X\mid Y}(a_i\mid y)$；平均错误率 $P_E=1-\sum_y p(x^*(y),y)$ \\
+\midrule
+信息传输速率 & 等概消息编码时 $R=\frac{\log M}{n}$；二进制 $(n,k)$ 分组码码率 $R=k/n$ \\
+\midrule
+汉明距离与最小距离 & $d(x,y)=\sum_{i=1}^nx_i\oplus y_i$；$d_{\min}=\min_{i\ne j}d(v_i,v_j)$，线性码中为非零码字最小重量 \\
+\midrule
+纠错条件 & 若码的最小汉明距离 $d_H\ge2t+1$，则可纠正 $t$ 个错误 \\
+\midrule
+BSC 序列似然 & 若汉明距离为 $d$，则 $p(\mathbf y\mid\mathbf x)=(1-p)^{n-d}p^d$ \\
+\midrule
+BSC 最小距离译码 & 当 $p<1/2$ 时，ML 等价于最小汉明距离译码 \\
+\midrule
+信道编码定理 & 若信息率 $R<C$，存在编码使错误概率趋于 $0$；若 $R>C$，不能可靠传输 \\
+\midrule
+信源信道编码定理 & 若信源熵率 $H<C$，可靠传输存在；若 $H>C$，差错率不能趋于 $0$ \\
+\midrule
+约束容量 & $C(\beta)=\max_{p(x):E[f(X)]\le\beta}I(X;Y)$；平均能量约束常取 $f(x)=x^2$ \\
+\midrule
+加性噪声信道 & 独立加性噪声 $Y=X+Z$ 时，$I(X;Y)=h(Y)-h(Z)$ \\
+\midrule
+高斯信道每自由度容量 & $C=\frac12\log_2\left(1+\frac{E}{\sigma_Z^2}\right)$ \\
+\midrule
+并联高斯信道注水 & $E_i=(\lambda-N_i)^+$，$C=\frac12\sum_{i:E_i>0}\log_2(\lambda/N_i)$ \\
+\midrule
+波形自由度 & 限时 $T$、限带 $W$ 的实波形约有 $N=2TW$ 个自由度 \\
+\midrule
+AWGN 波形信道 & \textcolor{Red}{$C=W\log_2\left(1+\frac{P}{N_0W}\right)$}；无限带宽极限 $C=(P/N_0)\log_2e$ \\
+\midrule
+频谱效率与 Shannon 极限 & $C/W=\log_2(1+P/(N_0W))$；$\frac{E_b}{N_0}\ge\frac{2^{R/W}-1}{R/W}$，极限为 $\ln2=-1.59\,\mathrm{dB}$ \\
+\midrule
+失真测度 & 失真矩阵 $\mathbf d=[d(a_i,b_j)]$；序列失真 $d_N(\mathbf x,\mathbf y)=\frac1N\sum_i d(x_i,y_i)$ \\
+\midrule
+平均失真 & $D=\sum_{x,y}p(x)p(y\mid x)d(x,y)$ \\
+\midrule
+率失真函数 & $R(D)=\min_{p(\hat x\mid x):\bar d\le D}I(X;\hat X)$，随 $D$ 单调不增且下凸 \\
+\midrule
+率失真端点 & $D_{\min}=\sum_xp(x)\min_y d(x,y)$；$D_{\max}=\min_y\sum_xp(x)d(x,y)$，且 $R(D_{\max})=0$ \\
+\midrule
+二元对称失真 & 等概二元信源、汉明失真下 $R(D)=1-h_2(D)$，$0\le D\le1/2$ \\
+\midrule
+限失真信源编码 & $R\ge R(D)+\varepsilon$ 时可使 $\bar D\le D+\varepsilon$；$R<R(D)$ 时不能使 $\bar D\le D$ \\
+\midrule
+信源信道匹配 & 若信源率失真函数 $R(D)\le C$，则可通过容量为 $C$ 的信道达到失真 $D$ \\
+\end{longtable}
+}
+
+\subsection{数学概念速查}
 
 本附录整理正文中会反复用到、但不属于信息论核心定义的数学背景概念。阅读正文时若遇到矩阵、凸性、马尔可夫链或连续信道推导中的工具性概念，可先回到这里速查。
 
