@@ -76,6 +76,7 @@ P_E=1-\sum_y p(x^*,y).
 做译码题时，通常就是为每一列输出选择一个输入，使被选中的联合概率之和尽可能大。
 
 \begin{example}
+\label{ex:ch7-decision-rule-error-rate}
 \textbf{判决规则与平均错误率}：设
 \[
 [P_X]=[0.4\quad 0.6],
@@ -182,6 +183,7 @@ F(y)=a^*.
 \end{enumerate}
 
 \begin{example}
+\label{ex:ch7-map-ml-decision}
 \textbf{例7.2：MAP 与 ML 判决}：设信道输入 $X$ 取值为 $(a_1,a_2,a_3)$，概率分别为 $1/2,1/4,1/4$。信道输出 $Y$ 取值为 $(b_1,b_2,b_3)$，转移概率矩阵为
 \[
 P=
@@ -239,6 +241,7 @@ P_{e,\mathrm{ML}}=1-0.475=0.525.
 \end{example}
 
 \begin{example}
+\label{ex:ch7-nonuniform-map-ml}
 \textbf{不等概输入下 MAP 与 ML 的差异}：设输入先验概率为
 \[
 [P_X]=[0.7\quad0.3],
@@ -353,6 +356,7 @@ d_H\ge 2t+1.
 这个条件的直觉是：若要纠正 $t$ 个错误，每个码字周围半径为 $t$ 的接收球不能互相重叠。因此两个合法码字至少要相距 $2t+1$，译码器才能唯一判断接收序列更接近哪个码字。
 
 \begin{example}
+\label{ex:ch7-minimum-distance-correction}
 \textbf{最小距离与纠错能力}：设
 \[
 C_1=\{00000,01010,10101,11111\},
@@ -413,6 +417,7 @@ p(\mathbf{y}\mid\mathbf{x})=(1-p)^{n-d}p^d.
 这一定理把概率判决转化成距离判决：在 BSC 中，不必逐项比较复杂似然，只要选择与接收序列汉明距离最小的合法码字即可。
 
 \begin{example}
+\label{ex:ch7-bsc-sequence-ml}
 \textbf{BSC 上的序列 ML 译码}：设码字集合为
 \[
 C=\{00000,01010,10101,11111\},
@@ -480,6 +485,7 @@ H>C,
 信源信道编码定理把信源压缩和信道传输联系起来：信源每秒产生的不确定性不能超过信道每秒可靠承载的信息量。做题时通常就是比较 $H$ 和 $C$，或比较实际传输速率和信道容量。
 
 \begin{example}
+\label{ex:ch7-bsc-capacity-time}
 \textbf{BSC 容量与传输时间}：有一个二元对称信道，错误率 $p=0.02$，该信道以 $1500$ 个二元符号/秒的速率传送消息。现有一条由 $0,1$ 等概产生、长度为 $14000$ 的二元符号消息序列。问能否在 $10$ 秒内无差错传输？实现无差错传输的最短时间是多少？
 
 \noindent \textbf{解题流程}：\\[2pt]

@@ -74,6 +74,7 @@ p_{ij}\ge0,
 \end{warningBox}
 
 \begin{example}
+\label{ex:ch6-bsc-model}
 \textbf{二元对称信道（BSC）}：输入、输出字母表均为 $\{0,1\}$，错误率为 $\epsilon$。写出转移概率矩阵并画出转移图。
 
 \noindent \textbf{解题流程}：\\[2pt]
@@ -110,6 +111,7 @@ p_{ij}\ge0,
 \end{example}
 
 \begin{example}
+\label{ex:ch6-erasure-channel-model}
 \textbf{二元删除信道}：输入字母表 $A=\{0,1\}$，输出字母表 $B=\{0,2,1\}$。设 $0$ 被正确接收为 $0$ 的概率为 $p$，被删除为 $2$ 的概率为 $1-p$；$1$ 被删除为 $2$ 的概率为 $1-q$，被正确接收为 $1$ 的概率为 $q$。求转移矩阵。
 
 \textbf{解}：按输出顺序 $0,2,1$ 排列列，则
@@ -182,6 +184,7 @@ C=\max_{p(x_1,\dots,x_N)}\frac{1}{N}I(X^N;Y^N).
 判断对称性时，先看每一行是否由同一组概率数置换得到，再看每一列是否也具有相同的列和结构。若整体满足这两个条件，就是强对称信道；若需要按输出列分成若干块后才分别满足，则是准对称信道。若各行的概率集合本身不同，通常就不是对称信道。
 
 \begin{example}
+\label{ex:ch6-strongly-symmetric-check}
 \textbf{判断强对称信道}：判断矩阵
 \[
 [P]=\begin{bmatrix}
@@ -220,6 +223,7 @@ C=1-H(p).
 \]
 
 \begin{example}
+\label{ex:ch6-strongly-symmetric-capacity}
 \textbf{强对称信道容量}：信道转移矩阵为
 \[
 [P]=\begin{bmatrix}
@@ -299,6 +303,7 @@ I(U^L;V^L)\le I(X^N;Y^N).
 数据处理定理的直觉是：处理不能凭空产生关于原始信源的新信息。信息经过编码器、信道、译码器等环节后，关于原信源的互信息只会不增；处理次数越多，通常信息损失越多。
 
 \begin{example}
+\label{ex:ch6-cascaded-bsc}
 \textbf{两级 BSC 级联}：一个 BSC 的转移矩阵为
 \[
 P=\begin{bmatrix}1-\epsilon&\epsilon\\ \epsilon&1-\epsilon\end{bmatrix}.
@@ -325,6 +330,7 @@ I(X;Z)=1-H(2\epsilon(1-\epsilon)).
 \end{example}
 
 \begin{example}
+\label{ex:ch6-cascaded-bsc-capacity}
 \textbf{两级 BSC 容量}：若 BSC 错误率 $\epsilon=1/3$，求两级级联信道容量。
 
 \textbf{解}：两级级联矩阵为

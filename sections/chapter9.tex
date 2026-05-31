@@ -157,6 +157,7 @@ R(D_{\max})=0.
 若失真矩阵对每个输入都有一个零失真复现符号，则 $D_{\min}=0$，这时无失真端点就是 $R(0)=H(X)$。当 $D=D_{\max}$ 时，可以只输出一个固定符号，不再向复现端传递关于 $X$ 的信息，因此 $I(X;Y)=0$，所以 $R(D_{\max})=0$。
 
 \begin{example}
+\label{ex:ch9-dmin-dmax}
 \textbf{例9.2.1：计算 $D_{\min}$ 与 $D_{\max}$}：设试验信道输入符号为 $\{a_1,a_2,a_3\}$，且
 \[
 p(a_1)=p(a_2)=p(a_3)=\frac13.
@@ -279,6 +280,7 @@ R=\frac{\log_2 M}{N},
 限失真编码的思想是：当 $R<H$ 时，不再试图区分所有可能信源序列，而是把多个相近序列归并到同一个复现码字。编码器按最小失真原则为输入序列寻找一个码字 $\mathbf y_m$，只发送码字序号 $m$；译码器收到序号后输出对应复现序列。这样用更少的码字覆盖大量源序列，代价是产生可控失真。
 
 \begin{example}
+\label{ex:ch9-single-symbol-compression}
 \textbf{例9.3.1：单符号压缩算法}：设信源 $X$ 的符号集为
 \[
 \{a_1,a_2,\dots,a_{2n}\},
@@ -383,6 +385,7 @@ C<R(D),
 使用该定理时要注意单位一致。若信源每秒发出 $r_s$ 个符号，而 $R(D)$ 的单位是 bit/信源符号，则每秒所需传输率为 $r_sR(D)$。它应与信道每秒容量 $C$ 比较。
 
 \begin{example}
+\label{ex:ch9-binary-source-distortion-transmission}
 \textbf{习题9.25：二元信源的限失真传输}：有一信源
 \[
 \begin{pmatrix}

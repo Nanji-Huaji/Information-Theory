@@ -125,6 +125,7 @@ C=\max_{p(x)}\{h(Y)-h(Z)\}.
 这个公式的直觉很清楚：噪声的不确定性 $h(Z)$ 是信道本身带来的代价，输入分布能做的是让输出 $Y$ 在约束范围内尽量分散，从而让 $h(Y)$ 尽量大。
 
 \begin{example}
+\label{ex:ch8-amplitude-limited-uniform-noise}
 \textbf{幅度受限的均匀噪声信道}：设噪声
 \[
 Z\sim U[-1,1],
@@ -221,6 +222,7 @@ B-\sigma_i^2, & B>\sigma_i^2,\\
 可以把 $\sigma_i^2$ 看成第 $i$ 个池底高度，把总能量 $E$ 看成水量。水位 $B$ 高于池底的部分就是分配给该子信道的能量。池底太高的信道不会分配能量。
 
 \begin{example}
+\label{ex:ch8-two-parallel-gaussian-e6}
 \textbf{两路并联高斯信道，$E=6$}：设两个独立子信道噪声方差为
 \[
 (\sigma_1^2,\sigma_2^2)=(1,10),
@@ -261,6 +263,7 @@ C=\frac12\log_2\left(1+\frac61\right)
 \end{example}
 
 \begin{example}
+\label{ex:ch8-two-parallel-gaussian-e15}
 \textbf{两路并联高斯信道，$E=15$}：噪声方差仍为
 \[
 (\sigma_1^2,\sigma_2^2)=(1,10),
@@ -387,6 +390,7 @@ C=W\log_2\left(1+\frac{P}{N_0W}\right)
 这个公式的使用条件很重要：输入仅受平均功率约束；达到容量的输入应是高斯过程；噪声必须是加性、独立、带内白高斯噪声；$W$ 是正频率带宽，频带可以由若干不相邻频段组成；只关心信号带宽内的噪声谱密度，带外噪声不进入公式。
 
 \begin{example}
+\label{ex:ch8-awgn-capacity}
 \textbf{AWGN 信道容量计算}：一限带 AWGN 信道带宽为 $1\,\mathrm{MHz}$，信号功率为 $10\,\mathrm{W}$，噪声功率谱为
 \[
 \frac{N_0}{2}=10^{-9}\,\mathrm{W/Hz}.
@@ -482,6 +486,7 @@ P=E_bR,
 这就是 AWGN 信道可靠通信所需的最低能量信噪比，也称 Shannon 极限。它对应无限带宽、频谱效率趋近于 $0$ 的理想情况。
 
 \begin{example}
+\label{ex:ch8-reliable-transmission-bandwidth}
 \textbf{可靠传输与带宽判断}：已知
 \[
 \frac{E_b}{N_0}=25\,\mathrm{dB},
