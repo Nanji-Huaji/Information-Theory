@@ -1,4 +1,23 @@
-\section{数学概念}
+\section{数学概念附录}
+
+本附录整理正文中会反复用到、但不属于信息论核心定义的数学背景概念。阅读正文时若遇到矩阵、凸性、马尔可夫链或连续信道推导中的工具性概念，可先回到这里速查。
+
+\subsection{随机向量与矩阵工具}
+
+\begin{definitionBox}{协方差}
+两个随机变量 $X,Y$ 的协方差定义为
+\[
+\Cov(X,Y)=\E\bigl[(X-\E[X])(Y-\E[Y])\bigr].
+\]
+等价地，
+\[
+\Cov(X,Y)=\E[XY]-\E[X]\E[Y].
+\]
+\end{definitionBox}
+
+\begin{keypoint}{协方差的含义}
+协方差刻画两个变量的线性共同变化趋势。若 $\Cov(X,Y)>0$，二者倾向于同向变化；若 $\Cov(X,Y)<0$，二者倾向于反向变化；若 $\Cov(X,Y)=0$，只表示没有线性相关，一般不代表独立。
+\end{keypoint}
 
 \begin{definitionBox}{协方差矩阵}
 设随机向量
@@ -47,3 +66,342 @@ X=(X_1,X_2,\dots,X_N)^T,
 \]
 其中 $\sigma_i^2=\Var(X_i)$，$\rho$ 为相关系数。
 \end{formulaBox}
+
+\begin{definitionBox}{相关系数}
+两个随机变量 $X,Y$ 的相关系数定义为
+\[
+\rho_{XY}=\frac{\Cov(X,Y)}{\sqrt{\Var(X)\Var(Y)}}.
+\]
+若 $\Var(X),\Var(Y)>0$，则 $-1\le\rho_{XY}\le1$。
+\end{definitionBox}
+
+\begin{keypoint}{相关系数的含义}
+$\rho_{XY}$ 只刻画线性相关。$\rho_{XY}=0$ 表示不线性相关，但一般不代表独立；若 $(X,Y)$ 联合高斯，则不相关等价于独立。
+\end{keypoint}
+
+\begin{definitionBox}{半正定矩阵}
+实对称矩阵 $A$ 若满足对任意向量 $x$ 都有
+\[
+x^T A x\ge0,
+\]
+则称 $A$ 为半正定矩阵，记作 $A\succeq0$。
+\end{definitionBox}
+
+\begin{keypoint}{半正定与协方差矩阵}
+协方差矩阵一定半正定，因为
+\[
+a^T\Sigma a=\Var(a^TX)\ge0.
+\]
+这也是多维高斯分布中协方差矩阵必须满足的基本条件。
+\end{keypoint}
+
+\begin{definitionBox}{行列式的体积意义}
+对可逆线性变换 $Y=AX$，$|\det(A)|$ 表示 $A$ 对体积的缩放倍数。若 $|\det(A)|>1$，空间被拉伸；若 $|\det(A)|<1$，空间被压缩。
+\end{definitionBox}
+
+\begin{formulaBox}{线性变换与差熵}
+若 $Y=AX+\bm{\alpha}$，且 $A$ 为可逆矩阵，则
+\[
+h(Y)=h(X)+\log|\det(A)|.
+\]
+平移不改变差熵；正交矩阵满足 $|\det(A)|=1$，因此旋转和反射也不改变差熵。
+\end{formulaBox}
+
+\begin{definitionBox}{正交矩阵}
+实矩阵 $Q$ 若满足
+\[
+Q^TQ=I,
+\]
+则称为正交矩阵。它保持向量长度和夹角，几何上对应旋转、反射或二者的组合。
+\end{definitionBox}
+
+\begin{formulaBox}{Hadamard 不等式}
+若 $\Sigma$ 是半正定矩阵，则
+\[
+\det(\Sigma)\le\prod_{i=1}^N \Sigma_{ii}.
+\]
+在协方差矩阵中，这就是
+\[
+\det(\Sigma)\le\prod_{i=1}^N \sigma_i^2.
+\]
+\end{formulaBox}
+
+\begin{keypoint}{Hadamard 不等式在高斯熵中的作用}
+多维高斯熵依赖 $\det(\Sigma)$。当分量相关时，$\det(\Sigma)$ 通常小于方差乘积，因此联合差熵低于同方差独立高斯变量的熵。
+\end{keypoint}
+
+\begin{definitionBox}{一维高斯分布的 PDF}
+若随机变量 $X\sim\mathcal N(\mu,\sigma^2)$，则其概率密度函数（PDF）为
+\[
+f_X(x)=\frac{1}{\sqrt{2\pi}\sigma}
+\exp\left[-\frac{(x-\mu)^2}{2\sigma^2}\right],
+\qquad -\infty<x<\infty.
+\]
+标准正态分布 $Z\sim\mathcal N(0,1)$ 的 PDF 常记为
+\[
+\phi(x)=\frac{1}{\sqrt{2\pi}}e^{-x^2/2}.
+\]
+\end{definitionBox}
+
+\begin{definitionBox}{高斯分布的 CDF}
+随机变量 $X\sim\mathcal N(\mu,\sigma^2)$ 的累积分布函数（CDF）定义为
+\[
+F_X(x)=P(X\le x)=\int_{-\infty}^{x} f_X(t)\,\mathrm dt.
+\]
+标准正态 CDF 常记为
+\[
+\Phi(x)=P(Z\le x)=\int_{-\infty}^{x}\phi(t)\,\mathrm dt.
+\]
+一般高斯变量可标准化为
+\[
+F_X(x)=\Phi\left(\frac{x-\mu}{\sigma}\right).
+\]
+\end{definitionBox}
+
+\begin{definitionBox}{Q 函数}
+标准正态分布的右尾概率称为 Q 函数：
+\[
+Q(x)=P(Z>x)=\int_x^{\infty}\frac{1}{\sqrt{2\pi}}e^{-t^2/2}\,\mathrm dt.
+\]
+它与标准正态 CDF 的关系为
+\[
+Q(x)=1-\Phi(x)=\Phi(-x).
+\]
+\end{definitionBox}
+
+\begin{definitionBox}{误差函数 erf}
+误差函数定义为
+\[
+\operatorname{erf}(x)=\frac{2}{\sqrt{\pi}}\int_0^x e^{-t^2}\,\mathrm dt.
+\]
+它与标准正态 CDF 的关系为
+\[
+\Phi(x)=\frac12\left[1+\operatorname{erf}\left(\frac{x}{\sqrt2}\right)\right].
+\]
+\end{definitionBox}
+
+\begin{definitionBox}{互补误差函数 erfc}
+互补误差函数定义为
+\[
+\operatorname{erfc}(x)=1-\operatorname{erf}(x)
+=\frac{2}{\sqrt{\pi}}\int_x^{\infty}e^{-t^2}\,\mathrm dt.
+\]
+它与 Q 函数的关系为
+\[
+Q(x)=\frac12\operatorname{erfc}\left(\frac{x}{\sqrt2}\right).
+\]
+\end{definitionBox}
+
+\begin{keypoint}{这些函数的使用场景}
+PDF 描述密度，CDF 描述左侧累计概率，$Q(x)$ 描述标准正态右尾概率。通信中常用 $Q(\cdot)$ 表示高斯噪声超过判决门限的错误概率；erf 和 erfc 则是把高斯积分写成特殊函数的标准记号。
+\end{keypoint}
+
+\begin{definitionBox}{多维高斯随机向量}
+随机向量 $X\in\R^N$ 若服从均值 $\mu$、协方差矩阵 $\Sigma$ 的多维高斯分布，记为
+\[
+X\sim\mathcal N(\mu,\Sigma).
+\]
+当 $\Sigma$ 可逆时，其密度为
+\[
+p(x)=\frac{1}{(2\pi)^{N/2}\det(\Sigma)^{1/2}}
+\exp\left[-\frac12(x-\mu)^T\Sigma^{-1}(x-\mu)\right].
+\]
+\end{definitionBox}
+
+\begin{formulaBox}{多维高斯差熵}
+若 $X\sim\mathcal N(\mu,\Sigma)$，则
+\[
+h(X)=\frac12\log\bigl[(2\pi e)^N\det(\Sigma)\bigr]
+=\frac{N}{2}\log\bigl[2\pi e\det(\Sigma)^{1/N}\bigr].
+\]
+均值 $\mu$ 只决定分布中心，不影响差熵。
+\end{formulaBox}
+
+\subsection{凸性与优化直觉}
+
+\begin{definitionBox}{凸函数与凹函数}
+设函数 $f$ 定义在凸集合上。若对任意 $x_1,x_2$ 和 $0\le\lambda\le1$，有
+\[
+f(\lambda x_1+(1-\lambda)x_2)
+\le \lambda f(x_1)+(1-\lambda)f(x_2),
+\]
+则 $f$ 为凸函数；若不等号反向，则 $f$ 为凹函数。
+\end{definitionBox}
+
+\begin{keypoint}{上凸、下凸的读法}
+中文教材中常把凹函数称为上凸函数，把凸函数称为下凸函数。信息熵 $H(p)$ 通常是上凸的；率失真函数 $R(D)$ 通常是下凸的。
+\end{keypoint}
+
+\begin{formulaBox}{Jensen 不等式}
+若 $f$ 为凸函数，则
+\[
+f(\E[X])\le\E[f(X)].
+\]
+若 $f$ 为凹函数，则
+\[
+f(\E[X])\ge\E[f(X)].
+\]
+\end{formulaBox}
+
+\begin{keypoint}{Jensen 不等式在信息论中的用途}
+熵、互信息、容量和率失真函数的许多极值性质都来自凸性或凹性。看到“最大熵”“容量最大化”“时间共享导致下凸”时，背后通常都在使用 Jensen 不等式或凸组合思想。
+\end{keypoint}
+
+\begin{definitionBox}{凸组合与时间共享}
+若 $0\le\lambda\le1$，则
+\[
+\lambda x_1+(1-\lambda)x_2
+\]
+称为 $x_1$ 与 $x_2$ 的凸组合。信息率失真函数中的“时间共享”就是在两种方案之间按比例混合，因此平均失真和平均码率都形成凸组合。
+\end{definitionBox}
+
+\subsection{概率基础公式}
+
+\begin{definitionBox}{条件概率}
+若 $P(B)>0$，则事件 $A$ 在事件 $B$ 已发生条件下的条件概率定义为
+\[
+P(A\mid B)=\frac{P(A\cap B)}{P(B)}.
+\]
+\end{definitionBox}
+
+\begin{formulaBox}{乘法公式}
+由条件概率定义可得
+\[
+P(A\cap B)=P(A\mid B)P(B)=P(B\mid A)P(A).
+\]
+对多个事件，链式乘法公式为
+\[
+P(A_1\cap\cdots\cap A_n)
+=P(A_1)P(A_2\mid A_1)\cdots P(A_n\mid A_1\cap\cdots\cap A_{n-1}).
+\]
+\end{formulaBox}
+
+\begin{formulaBox}{全概率公式}
+若 $B_1,\dots,B_n$ 构成样本空间的一组划分，且 $P(B_i)>0$，则
+\[
+P(A)=\sum_{i=1}^n P(A\mid B_i)P(B_i).
+\]
+随机变量形式常写为
+\[
+p(y)=\sum_x p(y\mid x)p(x).
+\]
+\end{formulaBox}
+
+\begin{formulaBox}{贝叶斯公式}
+若 $P(A)>0$ 且 $P(B)>0$，则
+\[
+P(A\mid B)=\frac{P(B\mid A)P(A)}{P(B)}.
+\]
+结合全概率公式可写成
+\[
+P(B_j\mid A)=\frac{P(A\mid B_j)P(B_j)}{\sum_i P(A\mid B_i)P(B_i)}.
+\]
+\end{formulaBox}
+
+\begin{keypoint}{条件概率在信息论中的用途}
+信道转移概率 $p(y\mid x)$、条件熵 $H(X\mid Y)$、MAP 判决 $p(x\mid y)$ 和马尔可夫链转移概率 $P(X_{n+1}\mid X_n)$ 都是条件概率的直接应用。做信道题时，常按 $p(x)\to p(y\mid x)\to p(x,y)\to p(y)$ 的顺序整理概率。
+\end{keypoint}
+
+\subsection{随机过程与判决规则}
+
+\begin{definitionBox}{随机过程}
+随机过程是一族按时间或索引排列的随机变量，常写作
+\[
+\{X_n:n\ge1\}\quad\text{或}\quad\{X(t):t\in\R\}.
+\]
+离散信源序列、马尔可夫链和连续时间波形信号都可以看成随机过程。
+\end{definitionBox}
+
+\begin{definitionBox}{转移矩阵}
+有限状态齐次马尔可夫链的转移矩阵 $P=(p_{ij})$ 定义为
+\[
+p_{ij}=P(X_{n+1}=j\mid X_n=i).
+\]
+它是随机矩阵：每个元素非负，且每一行和为 $1$。
+\end{definitionBox}
+
+\begin{formulaBox}{平稳分布}
+概率向量 $\pi=(\pi_1,\dots,\pi_m)$ 若满足
+\[
+\pi P=\pi,
+\qquad
+\sum_i\pi_i=1,
+\]
+则称 $\pi$ 为转移矩阵 $P$ 的平稳分布。
+\end{formulaBox}
+
+\begin{keypoint}{平稳分布的用途}
+平稳分布表示马尔可夫链长期运行后各状态的稳定比例。马氏源熵率常写成“平稳分布加权的状态条件熵”：
+\[
+H_\infty=\sum_i\pi_i H(X\mid s=i).
+\]
+\end{keypoint}
+
+\begin{definitionBox}{MAP 与 ML 判决}
+最大后验概率判决（MAP）选择
+\[
+\hat x_{\mathrm{MAP}}=\arg\max_x p(x\mid y).
+\]
+最大似然判决（ML）选择
+\[
+\hat x_{\mathrm{ML}}=\arg\max_x p(y\mid x).
+\]
+\end{definitionBox}
+
+\begin{keypoint}{MAP 与 ML 的区别}
+MAP 同时考虑输入先验概率和信道转移概率；ML 只比较似然 $p(y\mid x)$。当输入等概时，先验概率只差一个共同常数，因此 MAP 与 ML 等价。
+\end{keypoint}
+
+\begin{definitionBox}{汉明距离}
+等长序列 $x^n$ 与 $y^n$ 的汉明距离定义为不同位置的个数：
+\[
+d_H(x^n,y^n)=\sum_{i=1}^n \mathbf 1\{x_i\ne y_i\}.
+\]
+二元情形也可写为
+\[
+d_H(x^n,y^n)=\sum_{i=1}^n x_i\oplus y_i.
+\]
+\end{definitionBox}
+
+\begin{keypoint}{汉明距离与 BSC 译码}
+在错误概率 $p\le1/2$ 的二元对称信道中，序列 ML 译码等价于选择与接收序列汉明距离最小的码字。
+\end{keypoint}
+
+\subsection{渐近与波形信道工具}
+
+\begin{definitionBox}{典型序列}
+对离散无记忆信源，长度为 $N$ 的典型序列是概率接近 $2^{-NH(X)}$ 的序列。典型序列集合的规模近似为
+\[
+|G_N|\approx2^{NH(X)}.
+\]
+\end{definitionBox}
+
+\begin{keypoint}{典型序列的直觉}
+长序列总数可能是 $q^N$，但真正高概率出现的主要集中在约 $2^{NH(X)}$ 个典型序列上。无失真定长编码定理正是利用这一点，用很小的错误概率换取接近熵的平均码率。
+\end{keypoint}
+
+\begin{definitionBox}{自由度}
+自由度可以理解为一个系统中相互独立、可以单独承载信息的实数维度数。一个实高斯随机变量通常对应 $1$ 个自由度。
+\end{definitionBox}
+
+\begin{formulaBox}{限时限带波形的自由度}
+对持续时间为 $T$、带宽为 $W$ 的实波形信号，抽样定理给出近似自由度数
+\[
+N=2TW.
+\]
+因此波形 AWGN 信道可等价看成 $2TW$ 个离散时间高斯子信道。
+\end{formulaBox}
+
+\begin{definitionBox}{注水原理}
+并联高斯信道中，若第 $i$ 个子信道噪声方差为 $\sigma_i^2$，总能量为 $E$，容量最优分配满足
+\[
+E_i=\max\{0,B-\sigma_i^2\},
+\qquad
+\sum_i E_i=E.
+\]
+其中 $B$ 称为水位。
+\end{definitionBox}
+
+\begin{keypoint}{注水原理的直觉}
+噪声小的子信道先分到能量，噪声太大的子信道可能分到 $0$。若算出某个 $E_i<0$，说明该子信道不应使用，需要删去后重新求水位。
+\end{keypoint}
