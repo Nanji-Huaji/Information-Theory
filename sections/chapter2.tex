@@ -1,6 +1,14 @@
 \section{第二章 离散信息的度量}
 
+\begin{remarkBox}{本章重点}
+本章主要回答“信息怎么量化”这件事。学习时先抓住自信息、熵和互信息的定义，再看联合熵、条件熵、KL 散度和平均互信息之间的关系，最后把这些量用于信道分析。
+\end{remarkBox}
+
 \subsection{自信息与互信息}
+
+\begin{remarkBox}{本节阅读提示}
+本节里，小写 $x,y,z$ 表示事件或取值，大写 $X,Y,Z$ 表示随机变量。前者更像“某一次发生了什么”，后者更像“整体分布是什么样”。
+\end{remarkBox}
 
 \subsubsection{自信息}
 信源发出的消息是随机的，因此用\textbf{概率}来刻画。通俗地说，收到一个「不大可能」的事件（如中彩票）比收到一个「意料之中」的事件（如日出）包含更多信息。信息论将这种直觉量化，定义了自信息。
@@ -61,6 +69,10 @@ I(x,y) = I(x) + I(y \mid x) = I(y) + I(x \mid y).
 \subsubsection{互信息}
 条件自信息回答了「已知 $y$ 后 $x$ 还剩多少信息」，但它没有直接告诉我们 $y$ 到底对 $x$ 提供了多少信息。互信息正是用来回答这个问题的：它将「已知 $y$ 前的 $I(x)$」与「已知 $y$ 后的 $I(x \mid y)$」做差，差值就是 $y$ 提供给 $x$ 的信息。
 
+\begin{remarkBox}{点互信息和平均互信息}
+这里的 $I(x;y)$ 是\textbf{点互信息}，描述一次具体取值带来的信息变化；后面写成 $I(X;Y)$ 时，才是对所有取值加权平均后的\textbf{平均互信息}。
+\end{remarkBox}
+
 \begin{definitionBox}{互信息}
 事件 $y$ 对事件 $x$ 的互信息定义为
 \[
@@ -69,14 +81,14 @@ I(x;y) = \log \frac{p(x \mid y)}{p(x)} = I(x) - I(x \mid y).
 \end{definitionBox}
 
 \begin{keypoint}{互信息的含义}
-互信息 $I(x;y)$ 表示由事件 $y$ 发生所减少的关于 $x$ 的\textbf{不确定性}。等价地说，它是事件 $y$ 给出的关于 $x$ 的\textbf{信息量}。
+互信息 $I(x;y)$ 表示事件 $y$ 对事件 $x$ 带来的信息增量，也就是关于 $x$ 的不确定性减少量。
 \end{keypoint}
 
 \begin{warningBox}{互信息的符号}
 $I(x;y)$ 可以为正、为负或为 0：
 \begin{itemize}
   \item $I(x;y) > 0$：$y$ 使 $x$ 更可能出现；
-  \item $I(x;y) = 0$：$x$ 与 $y$ 相互独立；
+  \item $I(x;y) = 0$：对该取值对来说，$y$ 不改变 $x$ 的概率；
   \item $I(x;y) < 0$：$y$ 使 $x$ 更不可能出现（但仍提供了信息）。
 \end{itemize}
 \end{warningBox}
@@ -136,14 +148,14 @@ I(x;y \mid z) = \log \frac{p(x \mid y,z)}{p(x \mid z)}.
 \end{enumerate}
 
 \noindent \textbf{解题流程}：\\[2pt]
-步骤一：识别题型——(1) 为自信息，(2) 为条件自信息+互信息。\\
+步骤一：识别题型——(1) 为自信息，(2) 为条件自信息。\\
 步骤二：确定概率空间——$8\times8=64$ 格，等概，$p(x,y)=\frac{1}{64}$，$p(x)=\frac{1}{8}$，$p(y\mid x)=\frac{1}{8}$。\\
-步骤三：代公式——自信息直接取 $-\log_2 p$，互信息用 $I(x;y)=I(y)-I(y\mid x)$。
+步骤三：代公式——自信息直接取 $-\log_2 p$，条件自信息取 $-\log_2 p(y\mid x)$。
 
 \textbf{解}：\\
 (1) 共 64 格，等概率，$I=-\log_2\frac{1}{64}=6$ bit。\\
 (2) $p(y \mid x)=\frac{1}{8}$，$I(y\mid x)=-\log_2\frac{1}{8}=3$ bit。\\
-因此 $I(x;y)=I(y)-I(y\mid x)=6-3=3$ bit。
+\textbf{解释}：已知行号后，该行仍有 8 列可选且等概，故条件自信息为 3 bit。
 \end{example}
 
 \begin{warningBox}{单位问题}
@@ -151,6 +163,10 @@ I(x;y \mid z) = \log \frac{p(x \mid y,z)}{p(x \mid z)}.
 \end{warningBox}
 
 \subsection{信息熵的基本概念}
+
+\begin{remarkBox}{本节阅读提示}
+熵不是“乱不乱”的直觉词，而是“平均不确定性”。你可以把它理解成：信源每发一个符号，平均能给你多少新信息。
+\end{remarkBox}
 
 前面讨论的自信息与互信息，都是针对单个事件而言的。在实际通信系统中，信源会持续不断地输出符号序列，我们更关心的是信源整体表现出的统计特征——即每个符号平均携带多少信息。\textbf{信息熵}正是为此而定义的。
 
@@ -419,7 +435,11 @@ $P(Y=\text{白}) = 1-0.5=0.5$。\\[2pt]
 
 \subsection{平均互信息}
 
-前面 $I(x;y)$ 是事件层面的互信息，取决于具体取到的值，可能为正也可能为负。在系统分析和性能评估中，我们真正需要的是平均意义上的指标——即对所有可能的 $(x,y)$ 取值做加权平均，这就是平均互信息 $I(X;Y)$。
+\begin{remarkBox}{公式怎么选}
+已知完整联合分布时，优先用 $I(X;Y)=H(X)+H(Y)-H(X,Y)$；已知信道矩阵和输入分布时，优先用 $I(X;Y)=H(Y)-H(Y\mid X)$。目标永远是选最省步骤的那条路。
+\end{remarkBox}
+
+前面 $I(x;y)$ 是事件层面的互信息，取决于具体取到的值，可能为正也可能为负。系统分析里更常用的是它的平均值，也就是平均互信息 $I(X;Y)$。
 
 \subsubsection{平均互信息的定义}
 \begin{definitionBox}{平均互信息}
@@ -430,7 +450,7 @@ I(X;Y) = \sum_{x,y} p(x,y) \log \frac{p(x,y)}{p(x)p(y)}.
 \end{definitionBox}
 
 \begin{keypoint}{平均互信息含义}
-$I(X;Y)$ 表示从 $Y$ 平均获得关于 $X$ 的信息量，可以理解为 $X$ 与 $Y$ 之间「共享」的信息。它永远是\textbf{非负}的——多知道一个变量，平均而言不会让你更困惑。
+$I(X;Y)$ 表示从 $Y$ 平均获得关于 $X$ 的信息量，也就是 $X$ 与 $Y$ 之间共享的信息。
 \end{keypoint}
 
 \subsubsection{平均互信息与熵的关系}
@@ -520,6 +540,10 @@ P(Y\mid X) = \begin{pmatrix}
 \]
 已知信道矩阵和输入分布 $p(x)$ 后，输出分布通过全概率公式得到：$p(y)=\sum_x p(x)\,p(y\mid x)$。
 
+\begin{hintBox}{信道题读题顺序}
+信道题通常按“输入分布 $p(x)$ $\to$ 信道矩阵 $p(y\mid x)$ $\to$ 输出分布 $p(y)$ $\to$ 互信息”的顺序做。不要一上来就套互信息公式，先把输入、信道、输出三层关系理清。
+\end{hintBox}
+
 \begin{example}
 \textbf{二元对称信道}（平均互信息的计算）：输入 $X$ 等概（$p(0)=p(1)=0.5$），错误概率 $\varepsilon$。
 \begin{enumerate}
@@ -589,7 +613,7 @@ P(Y\mid X) = \begin{pmatrix}
 (2) 由输入等概及信道对称性，$p_Y(0)=p_Y(1)=\frac{1-p}{2}$，$p_Y(?)=p$。\\
 $H(Y)=-(1-p)\log\frac{1-p}{2}-p\log p = (1-p)(1+\log\frac{1}{1-p})+p\log\frac{1}{p}$。\\
 条件熵 $H(Y\mid X)=h(p)$（给定输入后，输出不确定性仅来自删除概率）。\\
-因此 $I(X;Y)=H(Y)-H(Y\mid X) = (1-p)(1-\log(1-p))$。\\[2pt]
+因此 $I(X;Y)=H(Y)-H(Y\mid X)=1-p$ bit。\\[2pt]
 比较：对于相同的错误概率 $p$，删除信道的互信息\textbf{高于}对称信道——因为删除信道明确告诉你「我不知道」，而不是给你错误答案。
 \end{example}
 
@@ -615,13 +639,14 @@ I(X;Z) \le I(X;Y), \qquad I(X;Z) \le I(Y;Z).
 \end{center}
 
 该不等式的物理含义：\textbf{对数据的任何处理都不会增加信息量}。无论你对收到的信号 $Y$ 做什么后处理（如解码、滤波、压缩），关于原始信号 $X$ 的信息只会减少或不变，绝不会凭空增加。
+这也是为什么在通信系统里，我们总是先尽量保留信息，再做处理，而不是指望后处理“补回”丢掉的信息。
 \end{formulaBox}
 
 \begin{warningBox}{常见混淆}
 不要混淆：
 \begin{itemize}
   \item $I(x;y)$（事件层面互信息，可为负）与 $I(X;Y)$（平均互信息，非负）；
-  \item $H(X \mid Y)=0$（$Y$ 完全决定 $X$）与 $I(X;Y)=0$（$X$ 与 $Y$ 独立）；
+  \item $H(X \mid Y)=0$（$Y$ 完全决定 $X$）与 $I(X;Y)=0$（平均意义下 $X$ 与 $Y$ 独立）；
   \item 互信息的对称性：$I(X;Y)=I(Y;X)$，这是很多公式推导的出发点。
 \end{itemize}
 \end{warningBox}
@@ -636,31 +661,31 @@ I(X;Z) \le I(X;Y), \qquad I(X;Z) \le I(Y;Z).
 自信息 & $I(x)=-\log p(x)$ & (1) \\
 联合自信息 & $I(x,y)=-\log p(x,y)$ & (2) \\
 条件自信息 & $I(x\mid y)=-\log p(x\mid y)$ & (3) \\
-互信息 & $I(x;y)=\log\frac{p(x\mid y)}{p(x)}=I(x)-I(x\mid y)$ & (4) \\
+\textcolor{Red}{互信息} & $\textcolor{Red}{I(x;y)=\log\frac{p(x\mid y)}{p(x)}=I(x)-I(x\mid y)}$ & (4) \\
 自信息关系 & $I(x,y)=I(x)+I(y\mid x)$ & (5) \\
 互信息对称性 & $I(x;y)=I(y;x)=\log\frac{p(x,y)}{p(x)p(y)}$ & (6) \\
 \midrule
-信息熵 & $H(X)=-\sum_x p(x)\log p(x)$ & (7) \\
+\textcolor{Red}{信息熵} & $\textcolor{Red}{H(X)=-\sum_x p(x)\log p(x)}$ & (7) \\
 二元熵 & $h(p)=-p\log p-(1-p)\log(1-p)$ & (8) \\
 联合熵 & $H(X,Y)=-\sum_{x,y}p(x,y)\log p(x,y)$ & (9) \\
 条件熵 & $H(X\mid Y)=\sum_y p(y)H(X\mid Y=y)$ & (10) \\
 \midrule
-熵的关系 & $H(X,Y)=H(X)+H(Y\mid X)$ & (11) \\
+\textcolor{Red}{熵的关系} & $\textcolor{Red}{H(X,Y)=H(X)+H(Y\mid X)}$ & (11) \\
  & $H(X\mid Y)\le H(X)$ & (12) \\
  & $0\le H(X)\le\log|\mathcal{X}|$ & (13) \\
 \midrule
-相对熵 & $\KL(P\|Q)=\sum_x P(x)\log\frac{P(x)}{Q(x)}\ge 0$ & (14) \\
+相对熵 & $\textcolor{Red}{\KL(P\|Q)=\sum_x P(x)\log\frac{P(x)}{Q(x)}\ge 0}$ & (14) \\
 \midrule
-平均互信息 & $I(X;Y)=\sum_{x,y}p(x,y)\log\frac{p(x,y)}{p(x)p(y)}$ & (15) \\
- & $I(X;Y)=H(X)-H(X\mid Y)=H(Y)-H(Y\mid X)$ & (16) \\
- & $\;\,\qquad=H(X)+H(Y)-H(X,Y)$ & (17) \\
+\textcolor{Red}{平均互信息} & $I(X;Y)=\sum_{x,y}p(x,y)\log\frac{p(x,y)}{p(x)p(y)}$ & (15) \\
+ & $\textcolor{Red}{I(X;Y)=H(X)-H(X\mid Y)=H(Y)-H(Y\mid X)}$ & (16) \\
+ & $\textcolor{Red}{\;\,\qquad=H(X)+H(Y)-H(X,Y)}$ & (17) \\
  & $I(X;Y)\ge 0$，$I(X;Y)\le\min\{H(X),H(Y)\}$ & (18) \\
 条件互信息 & $I(X;Y\mid Z)=H(X\mid Z)-H(X\mid Y,Z)$ & (19) \\
 \midrule
-熵的链则 & $H(X_1^n)=\sum_{i=1}^{n}H(X_i\mid X_1^{i-1})$ & (20) \\
-互信息链则 & $I(X_1^n;Y)=\sum_{i=1}^{n}I(X_i;Y\mid X_1^{i-1})$ & (21) \\
+\textcolor{Red}{熵的链则} & $H(X_1^n)=\sum_{i=1}^{n}H(X_i\mid X_1^{i-1})$ & (20) \\
+\textcolor{Red}{互信息链则} & $I(X_1^n;Y)=\sum_{i=1}^{n}I(X_i;Y\mid X_1^{i-1})$ & (21) \\
 \midrule
-数据处理不等式 & $X\!\to\!Y\!\to\!Z\;\Rightarrow\;I(X;Z)\le I(X;Y)$ & (22) \\
+\textcolor{Red}{数据处理不等式} & $\textcolor{Red}{X\!\to\!Y\!\to\!Z\;\Rightarrow\;I(X;Z)\le I(X;Y)}$ & (22) \\
 \bottomrule
 \end{tabularx}
 }

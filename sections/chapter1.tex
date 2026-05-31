@@ -1,5 +1,9 @@
 \section{第一章 绪论}
 
+\begin{remarkBox}{本章重点}
+本章主要回答三个问题：信息论研究什么、通信系统怎么抽象、香农信息论为什么重要。读这一章时，重点抓住信息的层次、通信系统模型，以及三大定理的含义。
+\end{remarkBox}
+
 \subsection{信息的概念和主要特征}
 
 \subsubsection{概述}
@@ -183,19 +187,19 @@
 \midrule
 通信系统模型 & $\text{信源} \to \text{编码器} \to \text{信道} \to \text{译码器} \to \text{信宿}$ \\
 \midrule
-性能指标   & 有效性（码率）、可靠性（误码率）、安全性（加密） \\
+性能指标   & \textcolor{Red}{有效性}（码率）、\textcolor{Red}{可靠性}（误码率）、\textcolor{Red}{安全性}（加密） \\
 \midrule
-香农第一定理 & 信息传输速率 $\ge$ 信源熵 $\Rightarrow$ 可实现无失真编码 \\
+\textcolor{Red}{香农第一定理} & \textcolor{Red}{信息传输速率 $\ge$ 信源熵 $\Rightarrow$ 可实现无失真编码} \\
 \midrule
-香农第二定理 & 信息传输速率 $<$ 信道容量 $\Rightarrow$ 可使差错任意小 \\
+\textcolor{Red}{香农第二定理} & \textcolor{Red}{信息传输速率 $<$ 信道容量 $\Rightarrow$ 可使差错任意小} \\
 \midrule
-香农第三定理 & 信息传输率 $\ge R(D)$ 时，平均失真 $\le D$；$R(D)$ 为率失真函数 \\
+\textcolor{Red}{香农第三定理} & \textcolor{Red}{信息传输率 $\ge R(D)$ 时，平均失真 $\le D$；$R(D)$ 为率失真函数} \\
 \midrule
 信息三个层次 & 语法信息（形式）$\to$ 语义信息（含义）$\to$ 语用信息（效用） \\
 \midrule
-信源分类   & 离散 / 连续；无记忆 / 有记忆 \\
+信源分类   & \textcolor{Red}{离散 / 连续；无记忆 / 有记忆} \\
 \midrule
-信道分类   & 狭义 / 广义；无噪声 / 有噪声；AWGN 为最常见模型 \\
+信道分类   & \textcolor{Red}{狭义 / 广义；无噪声 / 有噪声；AWGN 为最常见模型} \\
 \bottomrule
 \end{tabularx}
 }

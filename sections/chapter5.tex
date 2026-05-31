@@ -1,0 +1,427 @@
+\section{第五章 无失真信源编码}
+
+\begin{remarkBox}{本章重点}
+本章主要回答“怎样用尽可能短的码字无差错地表示信源”这个问题。学习时先理解信源编码、分组码、唯一可译码和异前置码，再掌握定长码与变长码的编码定理，最后会用 Huffman 方法构造最优二元异前置码，并计算平均码长、编码效率和剩余度。
+\end{remarkBox}
+
+\subsection{无失真信源编码概述}
+
+\subsubsection{信源编码与译码}
+信源编码的目的，是提高通信系统的\textbf{有效性}：用尽可能短的码符号序列表示信源符号序列。若译码后能够完全恢复原信源序列，称为无失真信源编码；若允许一定误差，则属于限失真信源编码。
+
+\begin{definitionBox}{信源编码与信源译码}
+\textbf{信源编码}是将信源符号序列按一定数学规律映射成码符号序列的过程。\textbf{信源译码}是根据码符号序列恢复信源序列的过程。若信源符号可以由码序列无差错恢复，则称为\textbf{无失真信源编码}。
+\end{definitionBox}
+
+\begin{keypoint}{无失真编码的核心思想}
+无失真信源编码定理说明：当序列长度足够长时，存在编码使每个信源符号平均所需比特数接近信源熵。因此，\textbf{熵是无损压缩码率的理论下界}。
+\end{keypoint}
+
+\subsubsection{分组码与扩展码}
+
+\begin{definitionBox}{分组码}
+分组码是先把信源序列分组，再把每一个信源符号组映射为一个码字的编码方式。每个码字只与当前输入的信源符号组有关，与其他符号组无关。
+\end{definitionBox}
+
+\begin{definitionBox}{$N$ 次扩展码}
+将 $N$ 个信源符号编成一个码字，等价于对原信源的 $N$ 次扩展源进行编码，称为原信源的 $N$ 次扩展码。
+例如二元信源 $X=\{0,1\}$ 的二次扩展源符号集为
+\[
+X^2=\{00,01,10,11\}.
+\]
+\end{definitionBox}
+
+\begin{methodBox}{信源编码的常见分类}
+\begin{itemize}
+  \item \textbf{概率匹配编码}：信源符号概率已知，如定长码、Huffman 编码、Fano 编码；
+  \item \textbf{通用编码}：信源概率未知；
+  \item \textbf{分组码}：信源序列与码字有明确对应关系；
+  \item \textbf{非分组码}：码序列与信源序列无确定逐组对应关系，如算术编码。
+\end{itemize}
+\end{methodBox}
+
+\subsection{分组码的可译性}
+
+\subsubsection{非奇异码、唯一可译码与即时码}
+分组码是否能无失真译码，关键不只在于单个信源符号是否有码字，还在于连续码字串接后能否被唯一切分。
+
+\begin{definitionBox}{非奇异码}
+若不同信源符号或信源符号组对应的码字互不相同，则称该码为\textbf{非奇异码}。非奇异是无失真编码的必要条件。
+\end{definitionBox}
+
+\begin{definitionBox}{唯一可译码}
+若任意有限长信源符号序列映射成的码序列都能唯一恢复为原信源序列，则称该码为\textbf{唯一可译码}。
+\end{definitionBox}
+
+\begin{definitionBox}{即时码与异前置码}
+若接收到每个码字的最后一个码符号后，可以立即译出该码字，则称为\textbf{即时码}。若一个码中没有任何码字是其他码字的前缀，则称为\textbf{异前置码}。异前置码与即时码等价，并且一定是唯一可译码。
+\end{definitionBox}
+
+\begin{warningBox}{几个概念的关系}
+对变长码而言，关系链为
+\[
+\text{异前置码} \Rightarrow \text{唯一可译码} \Rightarrow \text{非奇异码}.
+\]
+反方向一般不成立。对定长码而言，只要非奇异，就能根据固定码长分段，因此唯一可译。
+\end{warningBox}
+
+\begin{example}
+\textbf{唯一可译性判断}：设信源符号集为 $\{a,b,c,d\}$，有如下二元码：
+\[
+a\to0,\quad b\to10,\quad c\to110,\quad d\to111.
+\]
+判断它是否为即时码、唯一可译码。
+
+\noindent \textbf{解题流程}：\\[2pt]
+步骤一：检查是否有某个码字是另一个码字的前缀。\\
+步骤二：若无前缀关系，则为异前置码，即时且唯一可译。\\
+步骤三：若有前缀关系，还需进一步分析是否唯一可译。
+
+\textbf{解}：码字 $0,10,110,111$ 中没有任何一个是另一个的前缀，所以它是异前置码，也是即时码和唯一可译码。
+\end{example}
+
+\subsubsection{定长码与变长码的比较}
+
+\begin{methodBox}{定长码与变长码对比}
+\begin{itemize}
+  \item 定长码：码长固定，非奇异即可唯一可译；速率恒定，容易同步，不易产生差错传播；
+  \item 变长码：平均码长可更短，但通常需要缓冲器；受误码影响较大，可能产生差错传播；
+  \item 变长码若非奇异且异前置，则一定唯一可译。
+\end{itemize}
+\end{methodBox}
+
+\subsection{定长码与典型序列}
+
+\subsubsection{定长码的无失真编码条件}
+若对 $q$ 个信源符号逐个作 $r$ 元定长编码，码长为 $l$，为了至少给每个信源符号分配一个不同码字，必须满足
+\[
+r^l\ge q,
+\qquad l\ge \log_r q.
+\]
+例如 $27$ 个英文字母和空格若作二元定长编码，则 $2^l\ge27$，所以 $l\ge5$。但若利用信源概率分布进行长序列编码，平均每符号码长可以接近信源熵，而不必等于 $\log q$。
+
+\begin{theoremBox}{信源序列分组定理的含义}
+对离散无记忆信源，当序列长度 $N$ 足够大时，绝大多数概率集中在典型序列集合中。典型序列近似等概率，每个典型序列概率约为 $2^{-N H(X)}$，典型序列个数约为 $2^{N H(X)}$，非典型序列总概率接近 $0$。
+\end{theoremBox}
+
+\begin{formulaBox}{渐近均匀特性}
+对离散无记忆信源，长度为 $N$ 的典型序列 $x^N$ 满足
+\[
+-\frac{1}{N}\log p(x^N)\to H(X),
+\]
+因此
+\[
+p(x^N)\approx 2^{-N H(X)},\qquad |G_N|\approx 2^{N H(X)}.
+\]
+\end{formulaBox}
+
+\begin{keypoint}{为什么可以压缩}
+所有长度为 $N$ 的序列共有约 $q^N$ 个，但真正高概率出现的是约 $2^{N H(X)}$ 个典型序列。只要 $H(X)<\log q$，对典型序列编码所需码字数就远少于对所有序列等长编码所需码字数。
+\end{keypoint}
+
+\subsubsection{定长码信源编码定理}
+
+\begin{theoremBox}{定长码信源编码定理}
+设离散无记忆信源熵为 $H(X)$，码符号集大小为 $r$。将长度为 $N$ 的信源序列编成长度为 $l$ 的 $r$ 元码序列。只要
+\[
+\frac{l}{N}\log r \ge H(X)+\delta,
+\]
+当 $N$ 足够大时，译码差错概率可以任意小；若该不等式不满足，则不能保证无失真恢复，必然出现译码差错。
+\end{theoremBox}
+
+\begin{warningBox}{定长码的“无失真”}
+定长码定理中常说差错概率可任意小，是指通过足够长的分组，把非典型序列概率压到很小；这不是说有限长度下每个序列都一定无差错译出。
+\end{warningBox}
+
+\subsection{变长码与 Kraft 不等式}
+
+\subsubsection{码树与异前置码}
+变长异前置码可以用码树表示。码字对应树叶节点，且某个码字所在节点不能再向下延伸出其他码字。对 $r$ 元码，码树每个内部节点最多有 $r$ 个分支。
+
+\begin{formulaBox}{Kraft 不等式}
+设信源符号数为 $q$，码符号数为 $r$，码字长度为 $l_1,l_2,\dots,l_q$。存在具有这些码长的 $r$ 元异前置码的充要条件是
+\[
+\sum_{i=1}^{q} r^{-l_i}\le 1.
+\]
+\end{formulaBox}
+
+\begin{theoremBox}{Kraft 定理与唯一可译码}
+若 $l_1,l_2,\dots,l_q$ 满足 Kraft 不等式，则存在相应的异前置码。若一个码是唯一可译码，则它的码长必满足 Kraft 不等式。因此，任意唯一可译码都可以用同码长的异前置码代替。
+\end{theoremBox}
+
+\begin{warningBox}{Kraft 不等式的用法}
+Kraft 不等式判断的是“是否存在某个异前置码具有这组码长”，不是判断题目给出的具体码字一定就是异前置码。若给出的码是奇异码，即使满足 Kraft 不等式，也不能说它唯一可译。
+\end{warningBox}
+
+\begin{example}
+\textbf{用 Kraft 不等式判断码长可行性}：某四元码符号集 $\{0,1,2,3\}$，拟构造码长为 $1,2,2,3$ 的异前置码。问这样的异前置码是否存在？
+
+\noindent \textbf{解题流程}：\\[2pt]
+步骤一：确定码符号数 $r=4$。\\
+步骤二：计算 Kraft 和 $\sum_i r^{-l_i}$。\\
+步骤三：若和不超过 1，则存在相应异前置码。
+
+\textbf{解}：
+\[
+\sum_i4^{-l_i}=4^{-1}+4^{-2}+4^{-2}+4^{-3}
+=\frac14+\frac1{16}+\frac1{16}+\frac1{64}
+=\frac{25}{64}<1.
+\]
+因此存在具有这组码长的四元异前置码。
+\end{example}
+
+\subsubsection{平均码长、效率与剩余度}
+
+\begin{definitionBox}{平均码长}
+对单信源符号编码，若信源符号 $a_i$ 的概率为 $p_i$，对应码长为 $l_i$，则平均码长为
+\[
+\bar l=\sum_{i=1}^{q}p_i l_i.
+\]
+对 $N$ 次扩展源编码，原信源每个符号的平均码长为
+\[
+\bar l=\frac{1}{N}\sum_k p_k l_k.
+\]
+\end{definitionBox}
+
+\begin{definitionBox}{编码速率、效率与剩余度}
+若采用 $r$ 元码，平均每个信源符号需要 $\bar l$ 个码元，则编码速率为
+\[
+R'=\bar l\log r.
+\]
+编码效率和编码剩余度分别为
+\[
+\eta=\frac{H(X)}{R'}=\frac{H(X)}{\bar l\log r},
+\qquad
+\gamma=1-\eta.
+\]
+\end{definitionBox}
+
+\begin{theoremBox}{单符号信源变长码编码定理}
+给定熵为 $H(X)$ 的离散无记忆信源，用 $r$ 元码符号集对单信源符号进行编码，则存在唯一可译码，使其平均码长满足
+\[
+\frac{H(X)}{\log r}\le \bar l < \frac{H(X)}{\log r}+1.
+\]
+左边不等式对任何唯一可译码都必须满足。
+\end{theoremBox}
+
+\begin{theoremBox}{有限序列与平稳遍历信源的变长码定理}
+对长度为 $N$ 的离散无记忆信源序列编码，存在唯一可译码，使每信源符号平均码长满足
+\[
+\frac{H(X)}{\log r}\le \bar l < \frac{H(X)}{\log r}+\frac{1}{N}.
+\]
+对离散平稳遍历马氏源，可将 $H(X)$ 换为熵率 $H_\infty(X)$：
+\[
+\frac{H_\infty(X)}{\log r}\le \bar l < \frac{H_\infty(X)}{\log r}+\frac{1}{N}.
+\]
+\end{theoremBox}
+
+\begin{theoremBox}{无失真信源编码定理：香农第一定理}
+若信源编码码率 $R$ 不小于信源熵率 $H$，则存在无失真信源编码；若 $R<H$，则不存在无失真信源编码。该定理适用于所有类型信源和所有无损信源编码方式。
+\end{theoremBox}
+
+\begin{example}
+\textbf{二元扩展码的平均码长与效率}：离散无记忆信源 $S=\{s_1,s_2\}$，概率为 $P(s_1)=3/4$、$P(s_2)=1/4$。若逐符号二元编码平均码长为 $1$，再考虑二次扩展码
+\[
+s_1s_1\to0,
+\quad s_1s_2\to10,
+\quad s_2s_1\to110,
+\quad s_2s_2\to111.
+\]
+求两种编码效率。
+
+\noindent \textbf{解题流程}：\\[2pt]
+步骤一：先求信源熵 $H(S)$。\\
+步骤二：逐符号编码用 $\eta=H(S)/\bar l$。\\
+步骤三：二次扩展码先求扩展符号概率与平均码长，再除以 2 得每信源符号平均码长。
+
+\textbf{解}：
+\[
+H(S)=-\frac34\log_2\frac34-\frac14\log_2\frac14\approx0.811\text{ bit/符号}.
+\]
+逐符号二元定长编码 $\bar l=1$，故
+\[
+\eta_1=\frac{0.811}{1}=0.811.
+\]
+二次扩展源概率为
+\[
+P(s_1s_1)=\frac9{16},\quad P(s_1s_2)=\frac3{16},\quad
+P(s_2s_1)=\frac3{16},\quad P(s_2s_2)=\frac1{16}.
+\]
+二次扩展码对每两个信源符号的平均码长为
+\[
+\bar l_2=1\cdot\frac9{16}+2\cdot\frac3{16}+3\cdot\frac3{16}+3\cdot\frac1{16}
+=\frac{27}{16}.
+\]
+每信源符号平均码长为 $\bar l=\frac{27}{32}$，因此
+\[
+\eta_2=\frac{0.811}{27/32}\approx0.961.
+\]
+扩展编码提高了编码效率。
+\end{example}
+
+\subsection{Huffman 编码}
+
+\subsubsection{最优码与 Huffman 思想}
+
+\begin{definitionBox}{最优码}
+若一个唯一可译码的平均码长小于所有其他唯一可译码，则称该码为\textbf{最优码}或\textbf{紧致码}。注意，最优码是在唯一可译码集合中比较平均码长，不一定达到编码定理下界 $H(X)/\log r$。
+\end{definitionBox}
+
+\begin{theoremBox}{二元最优码的结构}
+对任意含 $q$ 个符号的信源，存在最优二元码，其中两个最长码字长度相同，且仅最后一个码位不同，一个末尾为 $0$，另一个末尾为 $1$。
+\end{theoremBox}
+
+\begin{methodBox}{二元 Huffman 编码步骤}
+\begin{enumerate}
+  \item 将信源符号按概率从大到小排列；
+  \item 合并概率最小的两个符号，形成新信源，并给这两个分支分配 $0$、$1$；
+  \item 若新信源仍有两个以上符号，继续合并最小概率的两个符号；
+  \item 最后从合并树反向读出每个原始信源符号的码字；
+  \item 计算 $\bar l=\sum_i p_i l_i$，再算效率 $\eta=H(X)/(\bar l\log r)$。
+\end{enumerate}
+\end{methodBox}
+
+\begin{keypoint}{Huffman 编码性质}
+Huffman 编码是最优异前置码。编码结果不唯一，例如 $0$、$1$ 可互换，相同概率符号的码字也可互换，但平均码长不变。
+\end{keypoint}
+
+\begin{warningBox}{Huffman 编码与下界}
+Huffman 编码最优，不代表一定达到 $H(X)$。当每个符号概率均可写成 $p_i=2^{-l_i}$ 且 $l_i$ 为整数时，二元 Huffman 编码才能达到熵下界。
+\end{warningBox}
+
+\begin{example}
+\textbf{二元 Huffman 编码}：信源 $S=\{a_1,a_2,a_3,a_4,a_5\}$ 的概率分别为
+\[
+0.4,
+0.2,
+0.2,
+0.1,
+0.1.
+\]
+构造二元 Huffman 码，并计算平均码长和编码效率。
+
+\noindent \textbf{解题流程}：\\[2pt]
+步骤一：合并最小概率 $0.1$ 与 $0.1$，得 $0.2$。\\
+步骤二：继续合并最小概率，直到只剩两个节点。\\
+步骤三：从树根回溯得到码字，再计算平均码长。\\
+步骤四：用 $\eta=H(S)/\bar l$ 计算二元编码效率。
+
+\textbf{解}：一种 Huffman 编码结果为
+\[
+a_1\to0,
+\quad a_2\to100,
+\quad a_3\to101,
+\quad a_4\to110,
+\quad a_5\to111.
+\]
+这组码字为异前置码。平均码长为
+\[
+\bar l=0.4\times1+0.2\times3+0.2\times3+0.1\times3+0.1\times3=2.2.
+\]
+信源熵为
+\[
+H(S)=-0.4\log_2 0.4-2\times0.2\log_2 0.2-2\times0.1\log_2 0.1
+\approx2.122\text{ bit/符号}.
+\]
+因此编码效率为
+\[
+\eta=\frac{H(S)}{\bar l}\approx\frac{2.122}{2.2}=0.965.
+\]
+\end{example}
+
+\subsubsection{Huffman 编码的应用}
+Huffman 编码不仅可用于数据压缩，也可用于构造平均判决次数最少的决策树。若每一次二元判决相当于询问一个“是/否”问题，则 Huffman 树给出了按先验概率优化后的决策顺序：高概率事件使用短路径，低概率事件使用长路径。
+
+\begin{keypoint}{决策树视角}
+Huffman 编码树可以直接看作二元决策树。码字长度就是识别该事件所需的判决次数，平均码长就是平均判决次数。
+\end{keypoint}
+
+\subsection{题型整理：第五章常见计算}
+
+\begin{methodBox}{题型一：判断码的可译性}
+\begin{enumerate}
+  \item 先看是否非奇异：不同符号是否对应不同码字；
+  \item 再看是否异前置：有无码字是其他码字前缀；
+  \item 若是异前置码，则立即判定唯一可译；
+  \item 若不是异前置码，不能直接判否，需要进一步分析串接码字是否存在歧义；
+  \item 定长码只要非奇异，就唯一可译。
+\end{enumerate}
+\end{methodBox}
+
+\begin{methodBox}{题型二：用 Kraft 不等式判断码长}
+\begin{enumerate}
+  \item 确定码符号集大小 $r$；
+  \item 写出码长 $l_1,\dots,l_q$；
+  \item 计算 $K=\sum_i r^{-l_i}$；
+  \item 若 $K\le1$，则存在同码长异前置码；若 $K>1$，则不存在。
+\end{enumerate}
+\end{methodBox}
+
+\begin{methodBox}{题型三：计算平均码长和编码效率}
+\begin{enumerate}
+  \item 根据码表写出每个码字长度 $l_i$；
+  \item 计算 $\bar l=\sum_i p_i l_i$；
+  \item 计算信源熵 $H(X)=-\sum_i p_i\log p_i$；
+  \item 对 $r$ 元码，用 $\eta=H(X)/(\bar l\log r)$；二元码中 $\log r=1$。
+\end{enumerate}
+\end{methodBox}
+
+\begin{methodBox}{题型四：构造 Huffman 编码}
+\begin{enumerate}
+  \item 概率排序；
+  \item 反复合并最小两个概率；
+  \item 给每次合并的两个分支标 $0$ 和 $1$；
+  \item 从最终树回读码字；
+  \item 检查异前置性，并计算 $\bar l$、$H(X)$、$\eta$。
+\end{enumerate}
+\end{methodBox}
+
+\subsection{公式速查表}
+
+{\scriptsize
+\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{类别} & \textbf{公式 / 核心结论} \\
+\midrule
+定长码必要条件 & \textcolor{Red}{$r^l\ge q$，即 $l\ge\log_r q$} \\
+\midrule
+典型序列概率 & \textcolor{Red}{$p(x^N)\approx2^{-N H(X)}$} \\
+\midrule
+典型序列个数 & \textcolor{Red}{$|G_N|\approx2^{N H(X)}$} \\
+\midrule
+定长码定理 & \textcolor{Red}{$\frac{l}{N}\log r\ge H(X)+\delta$ 时，$N$ 足够大可使译码差错概率任意小} \\
+\midrule
+Kraft 不等式 & \textcolor{Red}{$\sum_{i=1}^{q} r^{-l_i}\le1$} \\
+\midrule
+平均码长 & \textcolor{Red}{$\bar l=\sum_i p_i l_i$；$N$ 次扩展时 $\bar l=\frac1N\sum_k p_k l_k$} \\
+\midrule
+编码速率 & \textcolor{Red}{$R'=\bar l\log r$} \\
+\midrule
+编码效率 & \textcolor{Red}{$\eta=\frac{H(X)}{\bar l\log r}$} \\
+\midrule
+编码剩余度 & $\gamma=1-\eta$ \\
+\midrule
+单符号变长码界 & \textcolor{Red}{$\frac{H(X)}{\log r}\le\bar l<\frac{H(X)}{\log r}+1$} \\
+\midrule
+扩展变长码界 & \textcolor{Red}{$\frac{H(X)}{\log r}\le\bar l<\frac{H(X)}{\log r}+\frac1N$} \\
+\midrule
+香农第一定理 & \textcolor{Red}{$R\ge H$ 存在无失真信源编码；$R<H$ 不存在无失真信源编码} \\
+\midrule
+Huffman 编码 & 反复合并最小概率符号，得到最优异前置码；结果不唯一但平均码长不变 \\
+\bottomrule
+\end{tabularx}
+}
+
+\subsection{本章要求}
+\begin{remarkBox}{本章学习重点}
+本章学习重点：
+\begin{itemize}
+  \item 理解信源编码、信源译码、无失真编码和 $N$ 次扩展码；
+  \item 掌握非奇异码、唯一可译码、即时码、异前置码之间的关系；
+  \item 会用 Kraft 不等式判断码长集合是否可构造异前置码；
+  \item 理解典型序列思想和定长码信源编码定理；
+  \item 会计算平均码长、编码速率、编码效率和编码剩余度；
+  \item 熟练构造二元 Huffman 编码，并判断其最优性和异前置性；
+  \item 能说明香农第一定理中“熵是无损压缩下界”的含义。
+\end{itemize}
+\end{remarkBox}

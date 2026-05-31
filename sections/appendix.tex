@@ -1,0 +1,49 @@
+\section{数学概念}
+
+\begin{definitionBox}{协方差矩阵}
+设随机向量
+\[
+X=(X_1,X_2,\dots,X_N)^T,
+\]
+其均值向量为
+\[
+\mu=\E[X]=(\E[X_1],\E[X_2],\dots,\E[X_N])^T.
+\]
+则 $X$ 的协方差矩阵定义为
+\[
+\Sigma=\Cov(X)=\E\bigl[(X-\mu)(X-\mu)^T\bigr].
+\]
+\end{definitionBox}
+
+\begin{formulaBox}{矩阵元素形式}
+协方差矩阵的第 $(i,j)$ 个元素为
+\[
+\Sigma_{ij}=\Cov(X_i,X_j)=\E\bigl[(X_i-\mu_i)(X_j-\mu_j)\bigr].
+\]
+因此
+\[
+\Sigma=
+\begin{pmatrix}
+\Var(X_1) & \Cov(X_1,X_2) & \cdots & \Cov(X_1,X_N) \\
+\Cov(X_2,X_1) & \Var(X_2) & \cdots & \Cov(X_2,X_N) \\
+\vdots & \vdots & \ddots & \vdots \\
+\Cov(X_N,X_1) & \Cov(X_N,X_2) & \cdots & \Var(X_N)
+\end{pmatrix}.
+\]
+\end{formulaBox}
+
+\begin{keypoint}{协方差矩阵的含义}
+对角线元素是各分量的方差，表示每个变量自身的波动大小；非对角线元素是两两协方差，表示不同变量之间的线性相关方向和强弱。协方差矩阵总是对称矩阵，并且半正定。
+\end{keypoint}
+
+\begin{formulaBox}{二维情形}
+若 $X=(X_1,X_2)^T$，则
+\[
+\Sigma=
+\begin{pmatrix}
+\sigma_1^2 & \rho\sigma_1\sigma_2 \\
+\rho\sigma_1\sigma_2 & \sigma_2^2
+\end{pmatrix},
+\]
+其中 $\sigma_i^2=\Var(X_i)$，$\rho$ 为相关系数。
+\end{formulaBox}
