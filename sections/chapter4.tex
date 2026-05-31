@@ -76,13 +76,12 @@ h(Y)=h(X)+\log|\det(A)|.
 特别地，若 $A$ 为正交矩阵（旋转/反射），则 $\det(A)=\pm1$，$h(Y)=h(X)$——平移和旋转不改变差熵。
 \end{formulaBox}
 
-\begin{keypoint}{差熵与离散熵的关键差异}
+差熵与离散熵的关键差异包括：
 \begin{itemize}
   \item 差熵\textbf{不一定是非负的}：概率密度可能大于 1，导致 $-\log p(x)<0$。
   \item 差熵\textbf{在非线性变换下可能改变}：只有线性变换有简洁的加减规律。
   \item 差熵是\textbf{相对量度}，不能直接比较不同量纲的信源（如电压和温度）。
 \end{itemize}
-\end{keypoint}
 
 \subsubsection{连续随机变量的相对熵}
 
@@ -438,7 +437,7 @@ I(X;Y)=h(X)+h(Y)-h(X,Y)=\frac{1}{2}\log\frac{P(P+N)}{PN}
 \end{remarkBox}
 
 \subsection{本章要求}
-\begin{remarkBox}{第四章学习重点}
+第四章学习重点：
 \begin{itemize}
   \item 理解连续随机变量的\textbf{离散化取极限}思想，掌握\textbf{差熵}的定义和计算；
   \item 掌握\textbf{一维和多维高斯分布}的差熵公式；
@@ -447,4 +446,3 @@ I(X;Y)=h(X)+h(Y)-h(X,Y)=\frac{1}{2}\log\frac{P(P+N)}{PN}
   \item 掌握连续随机变量的\textbf{平均互信息}及其性质，能利用 $I=h(X)+h(Y)-h(X,Y)$ 进行计算；
   \item 理解差熵与离散熵的异同：非负性、绝对度量、变换性质。
 \end{itemize}
-\end{remarkBox}

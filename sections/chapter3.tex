@@ -650,13 +650,11 @@ H_1=h(0.6)\approx 0.971 > H_3\approx 0.847 > H_\infty\approx 0.785,
 \]
 \end{definitionBox}
 
-\begin{keypoint}{效率与剩余度的关系}
 效率越高，说明信源越接近“独立等概”；剩余度越大，说明可利用的相关性越强。
-\end{keypoint}
 
 \subsection{题型整理：第三章常见计算}
 
-\begin{methodBox}{离散信源题的通用步骤}
+\textbf{离散信源题的通用步骤}：
 \begin{enumerate}
   \item 先判断信源类型：无记忆、平稳，还是马尔可夫；
   \item 写出符号集和概率模型；
@@ -666,9 +664,8 @@ H_1=h(0.6)\approx 0.971 > H_3\approx 0.847 > H_\infty\approx 0.785,
 \end{enumerate}
 \vspace{2pt}
 \noindent \textbf{对应例题}：无记忆型见\cref{ex:binary-memoryless}、\cref{ex:extension-entropy}；马氏型见\cref{ex:markov-entropy}；二阶马氏型见\cref{ex:second-order}。
-\end{methodBox}
 
-\begin{methodBox}{马尔可夫链题的通用步骤}
+\textbf{马尔可夫链题的通用步骤}：
 \begin{enumerate}
   \item 检查是否是合法转移矩阵；
   \item 明确状态数；
@@ -676,10 +673,8 @@ H_1=h(0.6)\approx 0.971 > H_3\approx 0.847 > H_\infty\approx 0.785,
   \item 如需长期比例，求平稳分布 $\pi$；
   \item 如需信源熵率，把状态分布和条件熵合并。
 \end{enumerate}
-\end{methodBox}
 
-\begin{methodBox}{熵率 $H_\infty(X)$ 的计算}
-根据信源类型选择对应路径：
+\textbf{熵率 $H_\infty(X)$ 的计算}：根据信源类型选择对应路径：
 \begin{enumerate}
   \item \textbf{无记忆信源}：$\displaystyle H_\infty(X)=H(X)$。直接求单符号熵即可，与序列长度无关。
   \item \textbf{一般平稳信源（理论）}：$H_\infty(X)=\lim_{N\to\infty}H(X_N\mid X_1\cdots X_{N-1})$。实际考试中极少直接求极限，通常转化为以下两种情形。
@@ -694,7 +689,6 @@ H_1=h(0.6)\approx 0.971 > H_3\approx 0.847 > H_\infty\approx 0.785,
 \end{enumerate}
 
 \noindent \textbf{核心直觉}：熵率衡量的是“无限长序列中每个符号的平均信息量”。无记忆时它等于单符号熵；记忆越强，熵率越低。
-\end{methodBox}
 
 \begin{warningBox}{常见混淆}
 不要混淆：
@@ -760,7 +754,7 @@ H_1=h(0.6)\approx 0.971 > H_3\approx 0.847 > H_\infty\approx 0.785,
 \end{remarkBox}
 
 \subsection{本章要求}
-\begin{remarkBox}{第三章学习重点}
+第三章学习重点：
 \begin{itemize}
   \item \textbf{离散信源分类}与\textbf{数学模型}；
   \item \textbf{离散无记忆信源}的扩展熵计算；
@@ -769,4 +763,3 @@ H_1=h(0.6)\approx 0.971 > H_3\approx 0.847 > H_\infty\approx 0.785,
   \item \textbf{马尔可夫信源}与\textbf{马氏源熵率}；
   \item \textbf{相关性}、\textbf{效率}与\textbf{剩余度}的关系。
 \end{itemize}
-\end{remarkBox}

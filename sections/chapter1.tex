@@ -9,9 +9,7 @@
 \subsubsection{概述}
 信息时代社会的发展离不开\textbf{物质}、\textbf{能量}和\textbf{信息资源}。信息论要回答的核心问题，不是抽象地讨论“信息是什么”，而是围绕信息的\textbf{度量}、\textbf{传输}和\textbf{处理}建立可分析的工程模型。
 
-\begin{keypoint}{信息概述}
 信息论在当前更多是一门\textbf{专业基础课}，因为“信息”的\textbf{抽象性}很强，而且关于信息的定义尚未完全统一。
-\end{keypoint}
 
 \begin{definitionBox}{广义信息}
 广义地说，信息是认识主体（人、生物、机器）所感受的和所表达的\textbf{事物运动的状态及其变化方式}。
@@ -26,13 +24,9 @@
 \end{itemize}
 \end{definitionBox}
 
-\begin{warningBox}{层次关系}
 研究\textbf{语义信息}要以\textbf{语法信息}为基础，研究\textbf{语用信息}要以语义信息和语法信息为基础。
-\end{warningBox}
 
-\begin{keypoint}{香农信息论对象}
 香农信息论研究的是语法信息中的\textbf{概率信息}，先忽略\textbf{语义}和\textbf{语用}因素，再解决通信工程中的\textbf{传递}与\textbf{编码}问题。
-\end{keypoint}
 
 \begin{definitionBox}{通信信息的三个层次}
 通信信息可分为三个层次：\textbf{信号}、\textbf{消息}、\textbf{信息}。
@@ -44,22 +38,19 @@
 \subsubsection{通信系统与性能指标}
 通信系统是从一个地方向另一个地方\textbf{传送信息}的系统；在某种意义上，存储系统也可看作从现在向将来发送信息的系统。
 
-\begin{methodBox}{通信系统三项性能指标}
+通信系统通常从三项性能指标衡量：
 \begin{enumerate}
   \item \textbf{有效性}：传得快，码尽量短，频谱利用率尽量高；
   \item \textbf{可靠性}：传得好，误码率尽量低；
   \item \textbf{安全性}：传得安全，信息不泄露给未授权者。
 \end{enumerate}
-\end{methodBox}
 
-\begin{formulaBox}{提升指标的措施}
 提高三项指标的常用措施：
 \begin{itemize}
   \item 有效性：采用信源编码压缩码率，采用高频谱利用率调制；
   \item 可靠性：采用信道编码降低错误率；
   \item 安全性：采用强度高的加密和伪装技术。
 \end{itemize}
-\end{formulaBox}
 
 \subsubsection{通信系统模型}
 典型的数字通信系统由\textbf{信源}、\textbf{编码器}、\textbf{信道}、\textbf{译码器}和\textbf{信宿}组成，中间会受到\textbf{噪声}干扰。
@@ -95,17 +86,7 @@
   \item 信息率失真理论，即数据压缩的理论基础。
 \end{enumerate}
 
-\begin{theoremBox}{香农第一定理}
-\textbf{香农第一定理}：如果编码后的信源序列信息传输速率不小于\textbf{信源熵}，则可实现无失真编码；反之，不存在无失真编码。
-\end{theoremBox}
-
-\begin{theoremBox}{香农第二定理}
-\textbf{香农第二定理}：如果信息传输速率小于\textbf{信道容量}，则当编码序列足够长时，总可找到一种编码使传输差错任意小；反之，不存在使差错任意小的编码。
-\end{theoremBox}
-
-\begin{theoremBox}{香农第三定理}
-\textbf{香农第三定理}：对任何失真测度 $D \ge 0$，只要码字足够长，总可找到一种编码，使得当信息传输率满足 $R(D)$ 时，平均失真不超过 $D$。$R(D)$ 称为\textbf{信息率失真函数}。
-\end{theoremBox}
+三大编码定理概括了信息论的三个核心边界：\textbf{香农第一定理}说明，如果编码后的信源序列信息传输速率不小于\textbf{信源熵}，则可实现无失真编码；反之，不存在无失真编码。\textbf{香农第二定理}说明，如果信息传输速率小于\textbf{信道容量}，则当编码序列足够长时，总可找到一种编码使传输差错任意小；反之，不存在使差错任意小的编码。\textbf{香农第三定理}说明，对任何失真测度 $D \ge 0$，只要码字足够长，总可找到一种编码，使得当信息传输率满足 $R(D)$ 时，平均失真不超过 $D$。$R(D)$ 称为\textbf{信息率失真函数}。
 
 \subsubsection{信息论特点}
 \begin{keypoint}{信息论特点}
@@ -205,7 +186,6 @@
 }
 
 \subsection{本章要求}
-\begin{remarkBox}{本章学习重点}
 本章学习重点：
 \begin{itemize}
   \item \textbf{熵}与\textbf{互信息}的概念、性质与计算；
@@ -214,4 +194,3 @@
   \item \textbf{离散信道}差错概率与\textbf{编译码准则}；
   \item \textbf{特殊离散信道}与\textbf{高斯信道容量}计算。
 \end{itemize}
-\end{remarkBox}

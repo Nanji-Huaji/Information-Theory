@@ -46,9 +46,7 @@ I(x,y) = -\log p(x,y).
 \]
 \end{definitionBox}
 
-\begin{keypoint}{联合自信息意义}
 若 $X$ 与 $Y$ 相互独立，则 $p(x,y)=p(x)p(y)$，进而 $I(x,y)=I(x)+I(y)$。
-\end{keypoint}
 
 \subsubsection{条件自信息}
 在实际问题中，我们常常已知部分信息后再对另一事件进行评估。条件自信息刻画的就是在已知 $y$ 发生的前提下，$x$ 发生带来的信息量。注意，条件自信息仍是对单个事件 $x$ 的度量，只是概率换成了条件概率。
@@ -69,9 +67,7 @@ I(x,y) = I(x) + I(y \mid x) = I(y) + I(x \mid y).
 \subsubsection{互信息}
 条件自信息回答了「已知 $y$ 后 $x$ 还剩多少信息」，但它没有直接告诉我们 $y$ 到底对 $x$ 提供了多少信息。互信息正是用来回答这个问题的：它将「已知 $y$ 前的 $I(x)$」与「已知 $y$ 后的 $I(x \mid y)$」做差，差值就是 $y$ 提供给 $x$ 的信息。
 
-\begin{remarkBox}{点互信息和平均互信息}
 这里的 $I(x;y)$ 是\textbf{点互信息}，描述一次具体取值带来的信息变化；后面写成 $I(X;Y)$ 时，才是对所有取值加权平均后的\textbf{平均互信息}。
-\end{remarkBox}
 
 \begin{definitionBox}{互信息}
 事件 $y$ 对事件 $x$ 的互信息定义为
@@ -80,18 +76,14 @@ I(x;y) = \log \frac{p(x \mid y)}{p(x)} = I(x) - I(x \mid y).
 \]
 \end{definitionBox}
 
-\begin{keypoint}{互信息的含义}
 互信息 $I(x;y)$ 表示事件 $y$ 对事件 $x$ 带来的信息增量，也就是关于 $x$ 的不确定性减少量。
-\end{keypoint}
 
-\begin{warningBox}{互信息的符号}
 $I(x;y)$ 可以为正、为负或为 0：
 \begin{itemize}
   \item $I(x;y) > 0$：$y$ 使 $x$ 更可能出现；
   \item $I(x;y) = 0$：对该取值对来说，$y$ 不改变 $x$ 的概率；
   \item $I(x;y) < 0$：$y$ 使 $x$ 更不可能出现（但仍提供了信息）。
 \end{itemize}
-\end{warningBox}
 
 \begin{formulaBox}{互信息的对称性}
 \[
@@ -449,9 +441,7 @@ I(X;Y) = \sum_{x,y} p(x,y) \log \frac{p(x,y)}{p(x)p(y)}.
 \]
 \end{definitionBox}
 
-\begin{keypoint}{平均互信息含义}
 $I(X;Y)$ 表示从 $Y$ 平均获得关于 $X$ 的信息量，也就是 $X$ 与 $Y$ 之间共享的信息。
-\end{keypoint}
 
 \subsubsection{平均互信息与熵的关系}
 \begin{formulaBox}{平均互信息和熵的关系}
@@ -488,7 +478,7 @@ $I(X;Y)$ 表示从 $Y$ 平均获得关于 $X$ 的信息量，也就是 $X$ 与 $
 固定信道（$p(y\mid x)$）时，输入越均匀，互信息越大（上凸，存在最大值即为信道容量）；\\
 固定输入时，信道越「纯净」，互信息越大。这正是香农第二定理中信道容量的数学基础。
 
-\begin{methodBox}{平均互信息的计算}
+\textbf{平均互信息的计算步骤}：
 \begin{enumerate}
   \item 写出联合分布 $p(x,y)$ 或给定信道矩阵和输入分布；
   \item 求边缘分布 $p(x)$、$p(y)$；
@@ -498,7 +488,6 @@ $I(X;Y)$ 表示从 $Y$ 平均获得关于 $X$ 的信息量，也就是 $X$ 与 $
     路径三：$I = H(X) + H(Y) - H(X,Y)$；
   \item 验算：$I(X;Y)$ 应为非负数。
 \end{enumerate}
-\end{methodBox}
 \subsubsection{平均条件互信息}
 
 当系统中存在多个变量时，我们常需要计算在已知某个变量的条件下，另外两个变量之间的互信息。这在多用户信息论和网络信息论中非常常见。
